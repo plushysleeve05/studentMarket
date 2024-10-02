@@ -1,0 +1,79 @@
+/* Basic CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    font-family: sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+
+/* Global */
+.main-container{
+    margin: 0 auto;
+    /* max-width: 1200px; */
+    /* padding: 20px; */
+    display: flex;
+    height: 100%;
+}
+
+
+.left-div{
+    float: left;
+    width: 10%;
+    height: 100%;
+    background-color: yellow;
+}
+
+.right-div{
+    float: right;
+    width: 10%;
+    height: 100%;
+    background-color: black;
+}
+
+.middle-div{
+    flex-grow: 1;
+    background-color: green;
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.navigation{
+    background-color: red;
+    width: 100%;
+    /* position: sticky; */
+    top: 0;
+}
