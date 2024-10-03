@@ -51,19 +51,17 @@ ul, ol {
     float: left;
     width: 10%;
     height: 100%;
-    background-color: yellow;
+
 }
 
 .right-div{
     float: right;
     width: 10%;
     height: 100%;
-    background-color: black;
 }
 
 .middle-div{
     flex-grow: 1;
-    background-color: green;
     display: block;
     flex-direction: column;
     justify-content: center;
@@ -71,9 +69,75 @@ ul, ol {
     height: 100%;
 }
 
-.navigation{
-    background-color: red;
+
+
+/* Navigation */
+.navigation {
+    background-color: #2C3E50;
     width: 100%;
-    /* position: sticky; */
     top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 4px 2px -2px gray;
+    height: 9vh;
+}
+
+.navigation ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.navigation ul li {
+    margin: 0 15px;
+}
+
+.navigation ul li a {
+    color: white;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navigation ul li a:hover {
+    background-color: #95A5A6;
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Cart and Account Buttons */
+.nav-icons {
+    display: flex;
+    align-items: center;
+}
+
+.nav-icons a {
+    margin-left: 15px;
+}
+
+.nav-icons img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.nav-icons img:hover {
+    transform: scale(1.1);
+}
+
+.hero-sec-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    background-color: #f1f1f1;
+    z-index: 1;
 }

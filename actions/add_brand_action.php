@@ -1,31 +1,18 @@
 <?php
-require_once '../settings/db_class.php'; // Assuming db_connection is stored here
 
-class BrandController
-{
-    private $db;
+include("../controllers/general_controller.php");
 
-    public function __construct()
-    {
-        // Initialize the database connection
-        $this->db = new db_connection();
+if($_SERVER["REQUEST_METHOD"]=="POST"){
+    $brandName=$_POST["brand"];
+
+    $addBrand=add_brand_ctr($brandName);
+    if($addBrand !==false){
+        header("Location:../view/brand.php");
     }
 
-    /**
-     * Add a brand to the database.
-     * 
-     * @param string $brand_name
-     * @return bool
-     */
-    public function addBrand($brand_name)
-    {
-        // Escape the brand name to prevent SQL injection
-        $escaped_brand_name = mysqli_real_escape_string($this->db->db_conn(), $brand_name);
-
-        // SQL query to insert the brand
-        $sql = "INSERT INTO brands (brand_name) VALUES ('$escaped_brand_name')";
-
-        // Execute the query using db_query
-        return $this->db->db_query($sql);
+    else{
+        echo "Lab not successful";
     }
 }
+
+?>

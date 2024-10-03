@@ -2,28 +2,30 @@
 //database
 
 //database credentials
-require('db_cred.php');
+require(__DIR__ .'/db_cred.php');
 
-/**
- *@author David Sampah
- *@version 1.1
- */
+
+
+
 class db_connection
 {
 	
 	//properties
+	//$db stores the database connection and $results store result set from an SQL query 
 	public $db = null;
 	public $results = null;
 
 	//connect
 	/**
-	*Database connection
+	*Database connection: establishes a database connection. If successful, return true else return false
 	*@return bolean
 	**/
 	function db_connect(){
+		global $SERVER, $USERNAME, $PASSWD, $DATABASE;
+
 		
 		//connection
-		$this->db = mysqli_connect(SERVER,USERNAME,PASSWD,DATABASE);
+		$this->db = mysqli_connect($SERVER,$USERNAME,$PASSWD,$DATABASE);
 		
 		//test the connection
 		if (mysqli_connect_errno()) {
@@ -34,9 +36,11 @@ class db_connection
 	}
 
 	function db_conn(){
+		global $SERVER, $USERNAME, $PASSWD, $DATABASE;
+
 		
-		//connection
-		$this->db = mysqli_connect(SERVER,USERNAME,PASSWD,DATABASE);
+		//connection similar to first one but returns a database connection if successful
+		$this->db = mysqli_connect($SERVER,$USERNAME,$PASSWD,$DATABASE);
 		
 		//test the connection
 		if (mysqli_connect_errno()) {
@@ -52,6 +56,7 @@ class db_connection
 	*Query the Database
 	*@param takes a connection and sql query
 	*@return bolean
+	*runs a query and returns true if successful and false otherwise
 	**/
 	function db_query($sqlQuery){
 		
