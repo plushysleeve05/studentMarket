@@ -29,3 +29,15 @@ function addProductController()
         }
     }
 }
+
+function deleteProductById($product_id)
+{
+    // Create an instance of the Product class
+    $product = new Product();
+
+    // Call the deleteProduct function from the Product class
+    $result = $product->deleteProduct($product_id);
+
+    // Return the result (true if deletion was successful, false otherwise)
+    return $result;
+}

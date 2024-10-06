@@ -62,6 +62,9 @@ $products = $product->getAllProducts();
 
             <button type="submit" class="submit-btn">Add Product</button>
         </form>
+        <br><br>
+
+        <button type="button" class="submit-btn" onclick="window.location.href='view_products.php'">View Products</button>
     </div>
 
     <!-- SweetAlert Success/Error Alerts -->

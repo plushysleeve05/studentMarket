@@ -28,7 +28,7 @@ function deleteBrandController()
         if ($brand->deleteBrand($brandId)) {
             header("Location: ../view/view_brands.php");
         } else {
-            header("Location: ../views/view_brands.php?error=Failed to delete brand");
+            header("Location: ../view/view_brands.php?error=Failed to delete brand");
         }
     }
 }

@@ -1,3 +1,11 @@
+<?php
+// Include the controller that retrieves the brands
+include_once '../controllers/brand_controller.php';
+
+// Get all the brands
+$brands = viewBrandsController();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +45,12 @@
                 </select>
                 <button type="submit" class="delete-btn">Delete brand</button>
             </form>
+        </div>
+
+        <!-- Button to View All Brands -->
+        <div class="container">
+            <h2>View All Brands</h2>
+            <button onclick="window.location.href='view_brands.php'" class="delete-btn" >View Brands</button>
         </div>
 
     </div>

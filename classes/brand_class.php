@@ -33,22 +33,43 @@ class Brand
     // Delete a brand from the database by ID
     public function deleteBrand($id)
     {
-        $conn = $this->db->db_conn();  // Get the MySQLi connection
+        $conn = $this->db->db_conn();
 
+        // Check for database connection error
         if ($conn === false) {
             die("Database connection error");
         }
 
-        $query = "DELETE FROM brands WHERE brand_id = ?";
-        $stmt = $conn->prepare($query);
-
-        if ($stmt) {
-            $stmt->bind_param("i", $id);  // Bind the brand ID
-            return $stmt->execute();      // Execute the statement
+        // Delete all products associated with this brand
+        $deleteProductsQuery = "DELETE FROM products WHERE product_brand = ?";
+        $stmtProducts = $conn->prepare($deleteProductsQuery);
+        if ($stmtProducts) {
+            $stmtProducts->bind_param("i", $id);
+            $stmtProducts->execute();
         } else {
-            die("Prepare statement failed: " . $conn->error);  // Output error message
+            die("Prepare statement for deleting products failed: " . $conn->error);
+        }
+
+        // Now delete the brand
+        $query = "DELETE FROM brands WHERE brand_id = ?";
+        $stmtBrand = $conn->prepare($query);
+
+        if ($stmtBrand) {
+            $stmtBrand->bind_param("i", $id);
+            if ($stmtBrand->execute()) {
+                if ($stmtBrand->affected_rows > 0) {
+                    return true;  // Deletion was successful
+                } else {
+                    return false;  // No rows were deleted (brand ID doesn't exist)
+                }
+            } else {
+                die("Execution failed: " . $stmtBrand->error);
+            }
+        } else {
+            die("Prepare statement failed: " . $conn->error);
         }
     }
+
 
     // Get all brands from the database
     public function getBrands()
@@ -69,4 +90,3 @@ class Brand
         }
     }
 }
-?>

@@ -20,7 +20,7 @@ class Product
 
     public function getAllBrands()
     {
-        $sql = "SELECT brand_id, brand_name FROM brands";  // Assuming your brands table has brand_id and brand_name
+        $sql = "SELECT brand_id, brand_name FROM brands";  // brands table has brand_id and brand_name
         return $this->db->db_fetch_all($sql);
     }
 
@@ -41,4 +41,32 @@ class Product
             die("Prepare statement failed: " . $conn->error);
         }
     }
+
+    public function deleteProduct($product_id)
+    {
+        // SQL query to delete the product
+        $sql = "DELETE FROM products WHERE product_id = ?";
+
+        // Prepare the SQL statement using the existing db connection
+        $stmt = $this->db->db_conn()->prepare($sql);
+
+        // Check if the prepared statement is valid
+        if ($stmt) {
+            // Bind the product ID to the query as an integer
+            $stmt->bind_param("i", $product_id);
+
+            // Execute the query
+            if ($stmt->execute()) {
+                // Check if any rows were affected (indicating successful deletion)
+                return $stmt->affected_rows > 0;
+            } else {
+                // Log the error or handle the failed execution
+                die("Execution failed: " . $stmt->error);
+            }
+        } else {
+            // Log the error or handle the failed statement preparation
+            die("Prepare statement failed: " . $this->db->db_conn()->error);
+        }
+    }
+
 }
