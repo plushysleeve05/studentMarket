@@ -11,10 +11,10 @@ include("../classes/general_class.php");
 
 
 //--INSERT--//
-function add_brand_ctr($brandName){
-    $addbrand=new general_class();
-    return $addbrand->add_brand($brandName); 
-}
+// function add_brand_ctr($brandName){
+//     $addbrand=new general_class();
+//     return $addbrand->add_brand($brandName); 
+// }
 
 //--SELECT--//
 
