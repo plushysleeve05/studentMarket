@@ -1,131 +1,181 @@
 /* Basic CSS Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote {
-    margin: 0;
-    padding: 0;
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+blockquote {
+  margin: 0;
+  padding: 0;
 }
 
-html, body {
-    height: 100%;
-    font-family: sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+html,
+body {
+  height: 100%;
+  font-family: sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-img, picture, video, canvas, svg {
-    display: block;
-    max-width: 100%;
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }
 
-input, button, textarea, select {
-    font: inherit;
+input,
+button,
+textarea,
+select {
+  font: inherit;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
-ul, ol {
-    list-style: none;
+ul,
+ol {
+  list-style: none;
 }
-
 
 /* Global */
 .main-container {
-    margin: 0 auto;
-    display: flex;
-    height: 100%;
+  margin: 0 auto;
+  display: flex;
+  height: 100%;
 }
 
 .left-div {
-    float: left;
-    width: 5%;
-    height: 100%;
+  float: left;
+  width: 5%;
+  height: 100%;
 }
 
 .right-div {
-    float: right;
-    width: 5%;
-    height: 100%;
+  float: right;
+  width: 5%;
+  height: 100%;
 }
 
 .middle-div {
-    flex-grow: 1;
-    display: block;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+  flex-grow: 1;
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 /* Navigation */
 .navigation {
-    background-color: whitesmoke;
-    width: 100%;
-    top: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 2px -2px gray;
-    height: 9vh;
+  background-color: whitesmoke;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0px 4px 2px -2px gray;
+  height: 9vh;
 }
 
 /* Styles for the n-two nav */
 .n-two {
-    background-color: antiquewhite;
-    width: 100%;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    height: 6vh;
-    margin: 0;
-    padding: 0;
+  background-color: antiquewhite;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: 6vh;
+  margin: 0;
+  padding: 0;
 }
 
 .n-two ul {
-    list-style-type: none;
-    display: flex;
-    gap: 40px;
-    margin: 0;
-    padding: 0;
+  list-style-type: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
 }
 
 .n-two ul li {
-    display: inline-block;
+  display: inline-block;
 }
 
 .n-two ul li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 5px 10px;
-    transition: color 0.3s ease;
+  text-decoration: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
 }
 
 .n-two ul li a:hover {
-    color: #ff6600;
+  color: #ff6600;
 }
 
 /* Hero Section */
 .hero-sec-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    /* background-color: #f1f1f1; */
-    background-image: url('../images/hero-sec.jpg');
-    background-size: cover;
-    background-position:bottom;
-    z-index: 1;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  /* background-color: #f1f1f1; */
+  background-image: url("../images/hero-sec.jpg");
+  background-size: cover;
+  background-position: bottom;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+}
+
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:center;
+  align-items: normal;
+  align-content: normal;
+  /* background-color:blue; */
+  height: 80%;
+  /* margin: 70px; */
+  /* margin-top: 50px; */
+  /* padding: 10px; */
+  gap: 30px;
+}
+
+.flex-items {
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+  align-self: auto;
+  order: 0;
+  height: 510px;
+  width: 510px;
+  background-color: #333;
+  margin: 50px 0px;
+  border-radius: 20px;
 }

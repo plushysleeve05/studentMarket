@@ -55,11 +55,31 @@
 			<!-- hero section -->
 			<div class="hero-sec-container">
 				<div class="hero-text">
-					<h1>Welcome to stMARKET</h1>
+					<!-- <h1>Welcome to stMARKET</h1>
 					<p>Discover the best products at the best prices JUST FOR STUDENTS!</p>
-					<a href="products.php" class="hero-button">Shop Now</a>
+					<a href="products.php" class="hero-button">Shop Now</a> -->
 				</div>
 			</div>
+
+			<!-- banner -->
+			<div class="banner-section">
+				<div class="banner-container flex-container">
+					<div class="banner-cards flex-items">
+						<div class="text-content">
+							<span>student prices!</span>
+						</div>
+					</div>
+					<div class="banner-cards flex-items">
+						<!-- Additional banner cards can go here -->
+					</div>
+					<div class="banner-cards flex-items">
+						<!-- Additional banner cards can go here -->
+					</div>
+				</div>
+			</div>
+
+
+
 		</div>
 
 	</div>
