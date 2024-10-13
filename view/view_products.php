@@ -1,4 +1,10 @@
 <?php
+// Start the session
+session_start();
+
+// Check if customer is logged in
+$customer_id = isset($_SESSION['customer_id']) ? $_SESSION['customer_id'] : null;
+
 // Include the product and brand controllers to retrieve the products and brands
 include_once '../controllers/product_controller.php';
 include_once '../controllers/brand_controller.php';
@@ -15,7 +21,8 @@ $products = $product->getAllProducts();
 // Get all brands
 $brands = $brand->getBrands();
 
-$categories = $category ->getAllCategories();
+// Get all categories
+$categories = $category->getAllCategories();
 
 // Initialize and populate the $brandMap
 $brandMap = [];
@@ -26,6 +33,7 @@ if (!empty($brands)) {
 } else {
     echo "No brands found."; // Handle no brand case
 }
+
 // Initialize and populate the $categoryMap
 $categoryMap = [];
 if (!empty($categories)) {
@@ -35,8 +43,8 @@ if (!empty($categories)) {
 } else {
     echo "No categories found."; // Handle no categories case
 }
-// Example HTML table display for products
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,6 +60,17 @@ if (!empty($categories)) {
 <body>
     <div class="container">
         <h1>Product List</h1>
+
+        <!-- Display the Customer ID if logged in -->
+        <?php if ($customer_id): ?>
+            <p>Logged in as Customer ID: <?php echo $customer_id; ?></p>
+            <!-- Sign Out Button -->
+            <form action="../views/logout.php" method="POST">
+                <button type="submit" class="signout-btn">Sign Out</button>
+            </form>
+        <?php else: ?>
+            <p>You are not logged in.</p>
+        <?php endif; ?>
 
         <!-- Add Product Button -->
         <div class="add-product-section">
@@ -93,6 +112,12 @@ if (!empty($categories)) {
                                 <form action="../actions/delete_product_action.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                     <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                                     <button type="submit" class="delete-btn">Delete</button>
+                                </form>
+
+                                <!-- Add to Cart Button -->
+                                <form action="../actions/add_to_cart_action.php" method="POST">
+                                    <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                    <button type="submit" class="cart-btn">Add to Cart</button>
                                 </form>
                             </td>
                         </tr>

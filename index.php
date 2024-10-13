@@ -22,13 +22,7 @@
 
 				<!-- logo placeholder -->
 				<img src="logo.png" alt="Logo" />
-				<!-- Navigation Links -->
-				<ul>
-					<li><a href="index.php">Home</a></li>
-					<li><a href="products.php">Products</a></li>
-					<li><a href="about.php">About</a></li>
-					<li><a href="contact.php">Contact</a></li>
-				</ul>
+
 
 				<!-- Search Bar -->
 				<form action="search.php" method="get" class="search-bar">
@@ -47,15 +41,25 @@
 				</div>
 				<div class="right-div"></div>
 			</nav>
-
+			<nav class="n-two">
+				<div class="left-div"></div>
+				<!-- Navigation Links -->
+				<ul>
+					<li><a href="index.php">Home</a></li>
+					<li><a href="products.php">Products</a></li>
+					<li><a href="about.php">About</a></li>
+					<li><a href="contact.php">Contact</a></li>
+				</ul>
+				<div class="right-div"></div>
+			</nav>
 			<!-- hero section -->
-			<section class="hero-sec-container">
+			<div class="hero-sec-container">
 				<div class="hero-text">
 					<h1>Welcome to stMARKET</h1>
 					<p>Discover the best products at the best prices JUST FOR STUDENTS!</p>
 					<a href="products.php" class="hero-button">Shop Now</a>
 				</div>
-			</section>
+			</div>
 		</div>
 
 	</div>

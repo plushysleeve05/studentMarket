@@ -38,29 +38,25 @@ ul, ol {
 
 
 /* Global */
-.main-container{
+.main-container {
     margin: 0 auto;
-    /* max-width: 1200px; */
-    /* padding: 20px; */
     display: flex;
     height: 100%;
 }
 
-
-.left-div{
+.left-div {
     float: left;
-    width: 10%;
+    width: 5%;
     height: 100%;
-
 }
 
-.right-div{
+.right-div {
     float: right;
-    width: 10%;
+    width: 5%;
     height: 100%;
 }
 
-.middle-div{
+.middle-div {
     flex-grow: 1;
     display: block;
     flex-direction: column;
@@ -69,11 +65,9 @@ ul, ol {
     height: 100%;
 }
 
-
-
 /* Navigation */
 .navigation {
-    background-color: #2C3E50;
+    background-color: whitesmoke;
     width: 100%;
     top: 0;
     display: flex;
@@ -84,60 +78,54 @@ ul, ol {
     height: 9vh;
 }
 
-.navigation ul {
+/* Styles for the n-two nav */
+.n-two {
+    background-color: antiquewhite;
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    height: 6vh;
+    margin: 0;
+    padding: 0;
 }
 
-.navigation ul li {
-    margin: 0 15px;
+.n-two ul {
+    list-style-type: none;
+    display: flex;
+    gap: 40px;
+    margin: 0;
+    padding: 0;
 }
 
-.navigation ul li a {
-    color: white;
+.n-two ul li {
+    display: inline-block;
+}
+
+.n-two ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
     font-weight: bold;
     padding: 5px 10px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: color 0.3s ease;
 }
 
-.navigation ul li a:hover {
-    background-color: #95A5A6;
+.n-two ul li a:hover {
+    color: #ff6600;
 }
 
-/* Search Bar */
-.search-bar {
-    display: flex;
-    align-items: center;
-}
-
-
-/* Cart and Account Buttons */
-.nav-icons {
-    display: flex;
-    align-items: center;
-}
-
-.nav-icons a {
-    margin-left: 15px;
-}
-
-.nav-icons img {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.nav-icons img:hover {
-    transform: scale(1.1);
-}
-
-.hero-sec-container{
+/* Hero Section */
+.hero-sec-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
-    background-color: #f1f1f1;
+    height: 70vh;
+    /* background-color: #f1f1f1; */
+    background-image: url('../images/hero-sec.jpg');
+    background-size: cover;
+    background-position:bottom;
     z-index: 1;
+    margin: 0;
+    padding: 0;
 }
