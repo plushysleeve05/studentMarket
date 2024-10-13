@@ -74,7 +74,9 @@ $cartItems = $cart->getCartByCustomer($customer_id);
             <a href="checkout.php" class="checkout-btn">Proceed to Checkout</a>
         <?php else: ?>
             <p>Your cart is empty.</p>
+            <button><a href="view_products.php">VIEW PRODUCTS</a></button>
         <?php endif; ?>
+
     </div>
 </body>
 
