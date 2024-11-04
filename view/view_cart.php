@@ -33,7 +33,7 @@ $cartItems = $cart->getCartByCustomer($customer_id);
         <h1>Your Cart</h1>
 
         <!-- Display the customer ID -->
-        <p>Customer ID: <?php echo $customer_id; ?></p>
+        <p>Customer ID: <?php echo htmlspecialchars($customer_id); ?></p>
 
         <?php if (!empty($cartItems)): ?>
             <table class="cart-table">
@@ -43,18 +43,19 @@ $cartItems = $cart->getCartByCustomer($customer_id);
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($cartItems as $item): ?>
                         <tr>
-                            <td><?php echo $item['product_title']; ?></td>
+                            <td><?php echo htmlspecialchars($item['product_title']); ?></td>
                             <td><?php echo number_format($item['product_price'], 2); ?></td>
                             <td>
                                 <!-- Update form -->
                                 <form action="../actions/update_cart_action.php" method="POST">
-                                    <input type="hidden" name="product_id" value="<?php echo $item['p_id']; ?>">
-                                    <input type="number" name="quantity" value="<?php echo $item['qty']; ?>" min="1">
+                                    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['p_id']); ?>">
+                                    <input type="number" name="quantity" value="<?php echo htmlspecialchars($item['qty']); ?>" min="1">
                                     <button type="submit">Update</button>
                                 </form>
                             </td>
@@ -62,7 +63,7 @@ $cartItems = $cart->getCartByCustomer($customer_id);
                             <td>
                                 <!-- Delete form -->
                                 <form action="../actions/delete_cart_item_action.php" method="POST">
-                                    <input type="hidden" name="product_id" value="<?php echo $item['p_id']; ?>">
+                                    <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['p_id']); ?>">
                                     <button type="submit">Delete</button>
                                 </form>
                             </td>
@@ -71,12 +72,14 @@ $cartItems = $cart->getCartByCustomer($customer_id);
                 </tbody>
             </table>
 
-            <a href="checkout.php" class="checkout-btn">Proceed to Checkout</a>
+            <!-- Updated Proceed to Checkout button -->
+            <form action="../actions/checkout_action.php" method="POST">
+                <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+            </form>
         <?php else: ?>
             <p>Your cart is empty.</p>
             <button><a href="view_products.php">VIEW PRODUCTS</a></button>
         <?php endif; ?>
-
     </div>
 </body>
 

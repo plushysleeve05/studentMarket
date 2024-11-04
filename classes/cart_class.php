@@ -66,4 +66,24 @@ class Cart
         $stmt->bind_param('iii', $quantity, $customer_id, $product_id);
         return $stmt->execute();
     }
+
+    // Method to clear the cart for a specific customer
+    public function clearCartByCustomer($customerId)
+    {
+        $conn = $this->db->db_conn();  // Assuming $this->db is an instance of db_connection
+
+        if ($conn === false) {
+            die("Database connection error");
+        }
+
+        $query = "DELETE FROM cart WHERE customer_id = ?";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $customerId);
+            return $stmt->execute();
+        } else {
+            die("Prepare statement failed: " . $conn->error);
+        }
+    }
 }
