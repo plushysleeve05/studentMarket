@@ -12,8 +12,16 @@
 	<link rel="stylesheet" href="css/index-styles.css">
 	<title>stMARKET</title>
 </head>
+<script>
+	document.documentElement.style.scrollBehavior = 'smooth';
+</script>
 
 <body>
+	<!-- HTML for Preloader -->
+	<div id="preloader" style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; background-color: #ffffff; z-index: 1000;">
+		<p>Loading...</p>
+	</div>
+
 	<div class="main-container">
 		<!-- main page below -->
 		<div class="middle-div">
@@ -77,6 +85,19 @@
 					</div>
 				</div>
 			</div>
+			<br><br>
+
+			<!-- featured categroies section -->
+			<div class="featured-categories">
+				<h2>Featured Categories </h2><br><br>
+				<p class="subt">BEST DEALS! our top grossing products</p>
+				<div class="categories-card-container">
+					<div class="categories-card cc1"></div>
+					<div class="categories-card cc1"></div>
+					<div class="categories-card cc1"></div>
+					<div class="categories-card cc1"></div>
+				</div>
+			</div>
 
 
 
@@ -86,5 +107,15 @@
 
 
 </body>
+<script>
+	// JavaScript to Remove Preloader After Page Load
+	window.addEventListener('load', function() {
+		const preloader = document.getElementById('preloader');
+		preloader.style.opacity = '0';
+		setTimeout(() => {
+			preloader.style.display = 'none';
+		}, 1000); // Delay to allow for a fade-out effect
+	});
+</script>
 
 </html>

@@ -66,13 +66,13 @@ ol {
 
 .left-div {
   float: left;
-  width: 5%;
+  width: 10%;
   height: 100%;
 }
 
 .right-div {
   float: right;
-  width: 5%;
+  width: 10%;
   height: 100%;
 }
 
@@ -87,20 +87,21 @@ ol {
 
 /* Navigation */
 .navigation {
-  background-color: whitesmoke;
+  background-color: white;
   width: 100%;
   top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  box-shadow: 0px 4px 2px -2px gray;
+  /* box-shadow: 0px 4px 2px -2px gray; */
   height: 9vh;
+  position: sticky;
 }
 
 /* Styles for the n-two nav */
 .n-two {
-  background-color: antiquewhite;
+  background-color: #B0C4C9;
   width: 100%;
   display: flex;
   justify-content: left;
@@ -108,6 +109,8 @@ ol {
   height: 6vh;
   margin: 0;
   padding: 0;
+  position: sticky;
+  top: 9vh;
 }
 
 .n-two ul {
@@ -150,12 +153,11 @@ ol {
   padding: 0;
 }
 
-
 .flex-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content:center;
+  justify-content: center;
   align-items: normal;
   align-content: normal;
   /* background-color:blue; */
@@ -173,9 +175,50 @@ ol {
   flex-basis: auto;
   align-self: auto;
   order: 0;
-  height: 510px;
-  width: 510px;
+  height: 450px;
+  width: 490px;
   background-color: #333;
   margin: 50px 0px;
   border-radius: 20px;
+}
+
+.featured-categories {
+  height: 50vh;
+  width: 80%;
+  /* background-color: #F4EDE7 !important; */
+}
+
+
+.featured-categories h2{
+  padding-left: 200px;
+  font-size: 40px;
+  display: flex;
+}
+
+.featured-categories .subt{
+  padding-left: 200px;
+  font-size: 20px;
+  display: flex;
+}
+
+.categories-card-container{
+  /* background-color: #333; */
+  padding: 0 0 0 12%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:space-evenly;
+  align-items: normal;
+  align-content: normal;
+  gap: 40px;
+}
+
+.categories-card{
+  padding: 20px;
+  height: 40vh;
+  width: 15vw;
+  background-color: #F4EDE7;
+  
 }
