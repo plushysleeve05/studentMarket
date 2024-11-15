@@ -101,7 +101,7 @@ ol {
 
 /* Styles for the n-two nav */
 .n-two {
-  background-color: #B0C4C9;
+  background-color: #b0c4c9;
   width: 100%;
   display: flex;
   justify-content: left;
@@ -145,7 +145,7 @@ ol {
   align-items: center;
   height: 85vh;
   /* background-color: #f1f1f1; */
-  background-image: url("../images/pic1.jpeg");
+  background-image: url("../images/hero-sec.jpg");
   background-size: cover;
   background-position: bottom;
   z-index: 1;
@@ -188,20 +188,19 @@ ol {
   /* background-color: #F4EDE7 !important; */
 }
 
-
-.featured-categories h2{
+.featured-categories h2 {
   padding-left: 200px;
   font-size: 40px;
   display: flex;
 }
 
-.featured-categories .subt{
+.featured-categories .subt {
   padding-left: 200px;
   font-size: 20px;
   display: flex;
 }
 
-.categories-card-container{
+.categories-card-container {
   /* background-color: #333; */
   padding: 0 0 0 12%;
   height: 100%;
@@ -209,16 +208,15 @@ ol {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
   align-items: normal;
   align-content: normal;
   gap: 40px;
 }
 
-.categories-card{
+.categories-card {
   padding: 20px;
   height: 40vh;
   width: 15vw;
-  background-color: #F4EDE7;
-  
+  background-color: #f4ede7;
 }
