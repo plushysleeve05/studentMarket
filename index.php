@@ -29,7 +29,7 @@
 				<div class="left-div"></div>
 
 				<!-- logo placeholder -->
-				<img src="logo.png" alt="Logo" />
+				<img src="images/STMarketPlace.svg" alt="Logo" class="nav-logo" />
 
 
 				<!-- Search Bar -->
@@ -69,6 +69,8 @@
 				</div>
 			</div>
 
+			<br><br>
+
 			<!-- banner -->
 			<div class="banner-section">
 				<div class="banner-container flex-container">
@@ -85,17 +87,22 @@
 					</div>
 				</div>
 			</div>
-			<br><br>
+
+			<br>
 
 			<!-- featured categroies section -->
+			<h2 class="ft-text">Featured Categories </h2>
 			<div class="featured-categories">
-				<h2>Featured Categories </h2><br><br>
-				<p class="subt">BEST DEALS! our top grossing products</p>
-				<div class="categories-card-container">
-					<div class="categories-card cc1"></div>
-					<div class="categories-card cc1"></div>
-					<div class="categories-card cc1"></div>
-					<div class="categories-card cc1"></div>
+				<!-- <p class="subt">BEST DEALS! our top grossing products</p> -->
+				<div class="carousel-wrapper">
+					<div class="categories-card-container">
+						<div class="categories-card cc1"></div>
+						<div class="categories-card cc1"></div>
+						<div class="categories-card cc1"></div>
+						<div class="categories-card cc1"></div>
+						<div class="categories-card cc1"></div>
+						<div class="categories-card cc1"></div>
+					</div>
 				</div>
 			</div>
 

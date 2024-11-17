@@ -22,13 +22,15 @@ blockquote {
   padding: 0;
 }
 
-html,
+
 body {
   height: 100%;
   font-family: sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+
 }
 
 img,
@@ -174,7 +176,6 @@ ol {
   flex-shrink: 1;
   flex-basis: auto;
   align-self: auto;
-  order: 0;
   height: 450px;
   width: 490px;
   background-color: #333;
@@ -183,40 +184,71 @@ ol {
 }
 
 .featured-categories {
-  height: 50vh;
-  width: 80%;
-  /* background-color: #F4EDE7 !important; */
+  display: flex;
+  flex-direction: column; /* Stack title and carousel vertically */
+  align-items: center; 
+  /* justify-content: center;  */
+  height: 60vh; /* Full viewport height */
+  width: 100%; /* Full width */
+  /* text-align: center; */
+  background-color: #f9f9f9; /* Optional background */
 }
 
-.featured-categories h2 {
+
+.ft-text{
   padding-left: 200px;
   font-size: 40px;
   display: flex;
 }
 
 .featured-categories .subt {
-  padding-left: 200px;
+  /* padding-left: 200px; */
   font-size: 20px;
   display: flex;
 }
+.carousel-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  gap: 20px; /* Space between cards */
+  padding: 20px; /* Optional padding */
+  width: 60%; /* Adjust width as needed */
+}
+
 
 .categories-card-container {
   /* background-color: #333; */
-  padding: 0 0 0 12%;
-  height: 100%;
-  width: 100%;
+  /* padding: 0 0 0 12%; */
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: normal;
-  align-content: normal;
-  gap: 40px;
+  gap: 20px; /* Adjust the spacing between cards */
+  padding: 20px;
+  height: 100%;
 }
 
 .categories-card {
-  padding: 20px;
-  height: 40vh;
-  width: 15vw;
-  background-color: #f4ede7;
+  flex: 0 0 200px; /* Fixed card width */
+  height: 300px; /* Fixed card height */
+  background-color: #ddd;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; /* Center card content horizontally */
+  align-items: center; /* Center card content vertically */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add some depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.categories-card:hover {
+  transform: translateY(-10px); /* Lift the card on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+
+.carousel-wrapper::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.nav-logo {
+    height: 200px; /* Adjust height as needed */
+    width: auto;  /* Maintain aspect ratio */
+    object-fit: contain; /* Ensure the logo fits nicely */
 }
