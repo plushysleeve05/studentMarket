@@ -103,7 +103,7 @@ ol {
 
 /* Styles for the n-two nav */
 .n-two {
-  background-color: #b0c4c9;
+  background-color: #857b2d;
   width: 100%;
   display: flex;
   justify-content: left;
@@ -145,11 +145,12 @@ ol {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85vh;
+  height: 65vh;
   /* background-color: #f1f1f1; */
-  background-image: url("../images/hero-sec.jpg");
+  background-image: url("../images/bg1.jpg");
   background-size: cover;
-  background-position: bottom;
+  background-repeat: no-repeat;
+  background-position: center center;
   z-index: 1;
   margin: 0;
   padding: 0;
@@ -188,7 +189,7 @@ ol {
   flex-direction: column; /* Stack title and carousel vertically */
   align-items: center; 
   /* justify-content: center;  */
-  height: 60vh; /* Full viewport height */
+  height: 40vh; /* Full viewport height */
   width: 100%; /* Full width */
   /* text-align: center; */
   background-color: #f9f9f9; /* Optional background */
