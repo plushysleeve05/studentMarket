@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="left-div"></div>
                 <!-- Navigation Links -->
                 <ul>
-                    <li><a href="index.php">Home</a></li>
+                    <li><a href="../index.php">Home</a></li>
                     <li><a href="products.php">Products</a></li>
                     <li><a href="about.php">About</a></li>
                     <li><a href="contact.php">Contact</a></li>
