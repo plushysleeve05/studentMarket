@@ -157,7 +157,7 @@
 
 			<!-- Testimonials Section -->
 			<section class="testimonials-section">
-				<h2>What Our Customers Say</h2>
+				<h2>What Our Customers Say</h2><br><br>
 				<div class="testimonials-container">
 					<div class="testimonial">
 						<p>"ST-Marketplace helped me find all the books I needed at the best prices."</p>
@@ -172,7 +172,7 @@
 
 			<!-- Benefits Section -->
 			<section class="benefits-section">
-				<h2>Why Choose ST-Marketplace?</h2>
+				<h2 class="ft-text">Why Choose ST-Marketplace?</h2><br><br>
 				<div class="benefits-container">
 					<div class="benefit">
 						<img src="images/icon-discount.svg" alt="Discount">
@@ -189,10 +189,12 @@
 
 			<!-- Latest Products Section -->
 			<section class="latest-products">
-				<h2>Latest Listings</h2>
+				<h2 class="ft-text">Latest Listings</h2><br><br>
 				<div class="products-grid">
 					<div class="product-card">
-						<img src="images/product1.jpg" alt="Product Name">
+						<div class="product-image-holder">
+							<img src="images/product1.jpg" alt="Product Name">
+						</div>
 						<h3>Product Name</h3>
 						<p>$199.99</p>
 						<a href="#" class="add-to-cart-button">Add to Cart</a>
