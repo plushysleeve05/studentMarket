@@ -1,0 +1,335 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100%;
+  font-family: "Arial", sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background-color: #f4f7f6; /* Light greenish-gray for overall background */
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* Global */
+.main-container {
+  margin: 0 auto;
+  display: flex;
+  height: 100%;
+}
+
+.left-div,
+.right-div {
+  float: left;
+  width: 30%;
+  height: 100%;
+}
+
+.middle-div {
+  flex-grow: 1;
+  display: block;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Navigation */
+.navigation {
+  z-index: 1000;
+  background-color: #ffffff;
+  width: 100%;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  height: 9vh;
+  /* position: sticky; */
+}
+
+/* Styles for the n-two nav */
+.n-two {
+  width: 80%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  position: sticky;
+}
+
+.n-two ul {
+  list-style-type: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.n-two ul li {
+  display: inline-block;
+}
+
+.n-two ul li a {
+  text-decoration: none;
+  color: #4b6043;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
+}
+
+.n-two ul li a:hover {
+  color: #65a551;
+}
+
+/* Navigation Logo */
+.nav-logo {
+  height: 200px;
+  width: auto;
+  object-fit: contain;
+  background-color: none;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  color: white;
+  width: 80%;
+}
+
+.search-bar input {
+  width: 80%;
+  height: 45px;
+  border-radius: 25px;
+  border: none;
+  padding: 0 20px;
+  font-size: 1.2rem;
+  outline: none;
+}
+
+.nav-icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-icons img {
+  height: 120px;
+}
+
+/* Contact Section */
+.contact-section {
+  padding: 40px;
+  background-color: #6da54c57;
+  text-align: center;
+  height: 30vh;
+}
+
+.contact-section .social-icons {
+  margin-top: 20px;
+}
+
+.contact-section .social-icons a {
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.contact-section .social-icons img {
+  width: 40px;
+}
+
+/* main user details container */
+.user-details-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    height: 100%;
+}
+
+/* Account Strip Styling */
+.account-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #4b6043;
+    margin-bottom: 20px;
+    width:  80%;
+}
+
+.account-info h2 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.account-info p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.signout-button .btn-signout {
+    background-color: #65a551;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.signout-button .btn-signout:hover {
+    background-color: #4b6043; 
+}
+
+
+/* user-info-container styles */
+
+.user-info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: left !important;
+    align-items: center;
+    width: 80%;
+    margin-bottom: 20px;
+} 
+
+/* side bar styling */
+.left-sidebar {
+    width: 15vw;
+    /* background-color: #ffffff; */
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 100%;
+    align-self: left !important;
+}
+
+
+
+/* User Profile Section */
+.user-profile {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-img {
+    width: 50%;
+    height: 50%;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.user-name {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+}
+.user-email {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+
+
+/* User Profile Navigation */
+.sidebar-menu ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 20px;
+}
+
+.sidebar-menu ul li{
+    margin-bottom: 20px;
+}
+
+.menu-item{
+    font-size: 1rem;
+    color: #333;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    transition:  color 0.3s, font-size 0.3s, font-weight 0.3s;
+}
+
+.menu-item:hover{
+    /* background-color: #65a551; */
+    color: #65a551;
+    /* border-radius: 5px; */
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+
+/* section-detials style */
+
+.section-details {
+    height: 100%;
+    width: 100%;
+    background-color: #974c4c;
+}
+
+
+
+
+
+
