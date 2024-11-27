@@ -74,24 +74,24 @@
                             <li><a href="customer_profile.php?section=order_history" class="menu-item">Order History</a></li>
                             <li><a href="customer_profile.php?section=gift_cards" class="menu-item">Gift Cards</a></li>
                         </ul>
-                        </ul>
                     </nav>
                 </div>
-                <div class="section-details">
+
+
+
+                <!-- Section Details 1 -->
+                <div class="section-details" id="personal_information" style="display: block;">
                     <h3>Personal Student Information</h3>
                     <p>Manage your personal information, including phone numbers and email address where you can be contacted</p>
                 </div>
+
+                <div class="section-details" id="order_history" style="display: none;">
+                    <!-- Order history content -->
+                </div>
+
             </div>
 
-
-
-
         </div>
-
-
-
-
-
 
         <!-- Contact Section -->
         <footer class="contact-section">
@@ -115,6 +115,7 @@
             }, 1000);
         });
     </script>
+    <script src="../js/customer_profile.js" defer></script>
 
 
     </body>

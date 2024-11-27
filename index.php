@@ -63,7 +63,7 @@
 				</div>
 				<div class="hero-buttons">
 					<a href="products.php" class="hero-button">Shop Now</a>
-					<a href="collections.php" class="hero-button-secondary">Collection</a>
+					<a href="view/signup.php" class="hero-button-secondary">Join the community</a>
 				</div>
 			</div>
 

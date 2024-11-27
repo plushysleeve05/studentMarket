@@ -164,7 +164,7 @@
             margin-top: 20px;
             position: relative;
             top: 12%;
-            left: -15%;
+            left: -13%;
             display: flex;
             gap: 15px;
         }
@@ -217,22 +217,30 @@
 
         .flex-items {
             display: block;
-            flex-grow: 0;
-            flex-shrink: 1;
-            flex-basis: auto;
-            align-self: auto;
+            /* flex-grow: 0; */
+            /* flex-shrink: 1; */
+            /* flex-basis: auto; */
+            /* align-self: auto; */
             height: 450px;
-            width: 490px;
+            width: 450px;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             margin: 50px 0px;
-            border-radius: 20px;
+            border-radius: 5px;
             position: relative;
             overflow: hidden;
             padding: 20px;
-            color: white;
+            /* color: white; */
             background-color: #333;
+            transition: height 0.3s ease, width 0.3s ease, transform 0.3s ease, box-shadow 0.4s ease;
+        }
+
+        .flex-items:hover{
+            transform: translateY(-30px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            width: 500px;
+            height: 500px;
         }
 
         /* Featured Categories */
@@ -380,6 +388,7 @@
             font-size: 1rem;
         }
 
+       
         .f1 {
             background-image: url("../images/1.svg");
         }

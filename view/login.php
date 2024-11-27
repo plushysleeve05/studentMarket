@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="../css/login.css">
 </head>
 
-
+<body>
 <div class="main-container">
     <!-- main page below -->
     <div class="middle-div">
