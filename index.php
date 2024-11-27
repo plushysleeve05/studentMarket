@@ -100,21 +100,21 @@
 			<div class="featured-categories">
 				<div class="carousel-wrapper">
 					<div class="categories-card-container">
-						<div class="categories-card">
+						<!-- <div class="categories-card">
 							<div class="card-content">
 								<div class="card-image">
-									<img src="images/electronics.png" alt="Electronics">
+									<img src="images/1.svg" alt="Electronics">
 								</div>
 								<h3 class="category-title">Electronics</h3>
 								<p class="category-items">28+ Items</p>
 								<span class="category-offer">MIN 20% OFF</span>
 							</div>
-						</div>
+						</div> -->
 
 						<div class="categories-card">
 							<div class="card-content">
 								<div class="card-image">
-									<img src="images/furniture.png" alt="Furniture">
+									<img src="/images/bg1.jpg" alt="#">
 								</div>
 								<h3 class="category-title">Furniture</h3>
 								<p class="category-items">30+ Items</p>
@@ -124,7 +124,7 @@
 						<div class="categories-card">
 							<div class="card-content">
 								<div class="card-image">
-									<img src="images/furniture.png" alt="Furniture">
+									<img src="images/3.svg" alt="Furniture">
 								</div>
 								<h3 class="category-title">Furniture</h3>
 								<p class="category-items">30+ Items</p>
