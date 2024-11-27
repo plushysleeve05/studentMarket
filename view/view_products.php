@@ -45,8 +45,8 @@
 
             <div class="login-banner">
                 <div class="banner-content">
-                    <h1>Account - Login</h1>
-                    <p>Access exclusive student discounts and offers by logging in.</p>
+                    <h1>Product - name of category being displayed shoyld go here</h1>
+                    <p>small fact</p>
                 </div>
             </div>
 
@@ -118,13 +118,27 @@
                             <label for="size-large">Large</label>
                         </div>
                     </form>
+
+
+                    <h3>Availability</h3>
+                    <form id="availability-filter-form">
+                        <div class="filter-availability">
+                            <input type="checkbox" id="in-stock" name="availability" value="In Stock">
+                            <label for="in-stock">In Stock</label>
+                        </div>
+                        <div class="filter-availability">
+                            <input type="checkbox" id="out-of-stock" name="availability" value="Out of Stock">
+                            <label for="out-of-stock">Out of Stock</label>
+                        </div>
+                    </form>
+
                 </div>
 
 
                 <!-- Product listings on the right -->
                 <div class="product-listings">
                     <div class="product-header">
-                        <h2>Dry Fruit (22)</h2>
+                        <h2>Name of chosen categories</h2>
                         <div class="sort-options">
                             <span>Sort by:</span>
                             <select>
