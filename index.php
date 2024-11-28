@@ -47,7 +47,7 @@
 				<div class="nav-icons">
 					<div class="cart-button" id="open-cart-button">
 						<img src="images/cart.svg" alt="Cart" />
-</div>
+					</div>
 					<a href="view/signup.php" class="account-button">
 						<img src="images/profile2.svg" alt="Account" />
 					</a>
@@ -71,19 +71,19 @@
 			<!-- banner -->
 			<div class="banner-section">
 				<div class="banner-container flex-container">
-					<div class="banner-cards flex-items f1">
+					<div class="banner-cards flex-items f1" onclick="window.location.href='view/view_products.php'">
 						<div class="text-content">
 							<h2>Get the best deals on electronics</h2>
 							<p>Get the best deals on electronics</p>
 						</div>
 					</div>
-					<div class="banner-cards flex-items f2 ">
+					<div class="banner-cards flex-items f2" onclick="window.location.href='view/view_products.php'">
 						<div class="text-content">
 							<h2>Get the best deals on electronics</h2>
 							<p>Get the best deals on electronics</p>
 						</div>
 					</div>
-					<div class="banner-cards flex-items f3">
+					<div class="banner-cards flex-items f3" onclick="window.location.href='view/view_products.php'">
 						<div class="text-content">
 							<h2>Get the best deals on electronics</h2>
 							<p>Get the best deals on electronics</p>

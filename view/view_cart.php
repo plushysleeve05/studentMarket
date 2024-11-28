@@ -68,10 +68,13 @@
                                 <td>Product Name</td>
                                 <td>$29.00 USD</td>
                                 <td>
-                                    <button class="quantity-button minus">-</button>
-                                    <input type="number" class="quantity-input" value="1" min="1">
-                                    <button class="quantity-button plus">+</button>
+                                    <div class="quantity-section">
+                                        <button type="button" class="quantity-button minus">-</button>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                        <button type="button" class="quantity-button plus">+</button>
+                                    </div>
                                 </td>
+
                                 <td>$29.00 USD</td>
                             </tr>
 
@@ -149,6 +152,37 @@
             }, 3000);
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Select all quantity buttons
+            const minusButtons = document.querySelectorAll(".quantity-button.minus");
+            const plusButtons = document.querySelectorAll(".quantity-button.plus");
+
+            // Function to decrease quantity
+            minusButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const quantityInput = button.nextElementSibling; // The input is next to the minus button
+                    let currentValue = parseInt(quantityInput.value);
+
+                    if (currentValue > parseInt(quantityInput.min)) {
+                        quantityInput.value = currentValue - 1;
+                    }
+                });
+            });
+
+            // Function to increase quantity
+            plusButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const quantityInput = button.previousElementSibling; // The input is previous to the plus button
+                    let currentValue = parseInt(quantityInput.value);
+
+                    quantityInput.value = currentValue + 1;
+                });
+            });
+        });
+    </script>
+
+
 
 
 </body>
