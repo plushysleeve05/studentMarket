@@ -1,3 +1,10 @@
+<?php include '../view/cart_drawer.html'; ?>
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Products</title>
     <link rel="stylesheet" href="../css/products-styles.css">
+    <link rel="stylesheet" href="../css/cart_drawer_styles.css">
+
 </head>
 
 <body>
@@ -33,9 +42,9 @@
                 </form>
                 <!-- Cart and Account Buttons -->
                 <div class="nav-icons">
-                    <a href="cart.php" class="cart-button">
+                    <div id="open-cart-button" class="cart-button">
                         <img src="../images/cart.svg" alt="Cart" />
-                    </a>
+                    </div>
                     <a href="view/signup.php" class="account-button">
                         <img src="../images/profile2.svg" alt="Account" />
                     </a>
@@ -193,6 +202,7 @@
             </footer>
         </div>
     </div>
+    <script src="../js/cart_drawer.js"></script>
 </body>
 
 </html>

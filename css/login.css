@@ -171,26 +171,6 @@ ol {
   height: 120px;
 }
 
-/* Contact Section */
-.contact-section {
-  padding: 40px;
-  background-color: #6da54c57;
-  text-align: center;
-  height: 30vh;
-}
-
-.contact-section .social-icons {
-  margin-top: 20px;
-}
-
-.contact-section .social-icons a {
-  margin: 0 10px;
-  display: inline-block;
-}
-
-.contact-section .social-icons img {
-  width: 40px;
-}
 
 /* main form section */
 /* Login Form Styling */

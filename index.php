@@ -1,7 +1,4 @@
-<?php
-// landing/index page
-
-?>
+<?php include 'view/cart_drawer.html'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +7,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/index-styles.css">
+	<link rel="stylesheet" href="css/cart_drawer_styles.css">
+
 	<title>stMARKET</title>
 </head>
 <script>
@@ -34,7 +33,7 @@
 					<!-- Navigation Links -->
 					<ul>
 						<li><a href="index.php">Home</a></li>
-						<li><a href="products.php">Products</a></li>
+						<li><a href="view/view_products.php">Products</a></li>
 						<li><a href="about.php">About</a></li>
 						<li><a href="contact.php">Contact</a></li>
 					</ul>
@@ -46,9 +45,9 @@
 				</form>
 				<!-- Cart and Account Buttons -->
 				<div class="nav-icons">
-					<a href="cart.php" class="cart-button">
+					<div class="cart-button" id="open-cart-button">
 						<img src="images/cart.svg" alt="Cart" />
-					</a>
+</div>
 					<a href="view/signup.php" class="account-button">
 						<img src="images/profile2.svg" alt="Account" />
 					</a>
@@ -93,14 +92,12 @@
 				</div>
 			</div>
 
-			<br>
-
 			<!-- featured categories section -->
 			<h2 class="ft-text">Featured Categories</h2>
 			<div class="featured-categories">
 				<div class="carousel-wrapper">
 					<div class="categories-card-container">
-						<!-- <div class="categories-card">
+						<div class="categories-card">
 							<div class="card-content">
 								<div class="card-image">
 									<img src="images/1.svg" alt="Electronics">
@@ -109,7 +106,7 @@
 								<p class="category-items">28+ Items</p>
 								<span class="category-offer">MIN 20% OFF</span>
 							</div>
-						</div> -->
+						</div>
 
 						<div class="categories-card">
 							<div class="card-content">
@@ -151,36 +148,31 @@
 								<span class="category-offer">MIN 30% OFF</span>
 							</div>
 						</div>
+						<div class="categories-card">
+							<div class="card-content">
+								<div class="card-image">
+									<img src="images/furniture.png" alt="Furniture">
+								</div>
+								<h3 class="category-title">Furniture</h3>
+								<p class="category-items">30+ Items</p>
+								<span class="category-offer">MIN 30% OFF</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- Testimonials Section -->
-			<section class="testimonials-section">
-				<h2>What Our Customers Say</h2><br><br>
-				<div class="testimonials-container">
-					<div class="testimonial">
-						<p>"ST-Marketplace helped me find all the books I needed at the best prices."</p>
-						<h4>- John Doe, Business Student</h4>
-					</div>
-					<div class="testimonial">
-						<p>"I was able to sell my old electronics easily and make some extra cash."</p>
-						<h4>- Jane Smith, Engineering Student</h4>
-					</div>
-				</div>
-			</section>
-
 			<!-- Benefits Section -->
 			<section class="benefits-section">
-				<h2 class="ft-text">Why Choose ST-Marketplace?</h2><br><br>
+				<!-- <h2 class="ft-text">Why Choose ST-Marketplace?</h2><br><br> -->
 				<div class="benefits-container">
 					<div class="benefit">
-						<img src="images/icon-discount.svg" alt="Discount">
+						<img src="images/discount.svg" alt="Discount">
 						<h4>Exclusive Student Discounts</h4>
 						<p>Access to the best deals designed especially for students.</p>
 					</div>
 					<div class="benefit">
-						<img src="images/icon-secure.svg" alt="Secure">
+						<img src="images/credit-card-protection.svg" alt="Secure">
 						<h4>Secure Payments</h4>
 						<p>Secure and easy payment options for peace of mind.</p>
 					</div>
@@ -189,31 +181,114 @@
 
 			<!-- Latest Products Section -->
 			<section class="latest-products">
-				<h2 class="ft-text">Latest Listings</h2><br><br>
+				<h2 class="ft-text">Latest Listings</h2><br>
 				<div class="products-grid">
 					<div class="product-card">
-						<div class="product-image-holder">
-							<img src="images/product1.jpg" alt="Product Name">
+						<div class="product-card-image">
+							<img src="images/bg1.jpg" alt="Product Name">
 						</div>
-						<h3>Product Name</h3>
-						<p>$199.99</p>
-						<a href="#" class="add-to-cart-button">Add to Cart</a>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$199.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
 					</div>
 					<div class="product-card">
-						<img src="images/product2.jpg" alt="Product Name">
-						<h3>Product Name</h3>
-						<p>$249.99</p>
-						<a href="#" class="add-to-cart-button">Add to Cart</a>
+						<div class="product-card-image">
+							<img src="images/9838595.jpg" alt="Product Name">
+						</div>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$249.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
+					</div>
+					<div class="product-card">
+						<div class="product-card-image">
+							<img src="images/9838595.jpg" alt="Product Name">
+						</div>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$249.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
+					</div>
+					<div class="product-card">
+						<div class="product-card-image">
+							<img src="images/9838595.jpg" alt="Product Name">
+						</div>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$249.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
+					</div>
+					<div class="product-card">
+						<div class="product-card-image">
+							<img src="images/9838595.jpg" alt="Product Name">
+						</div>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$249.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
+					</div>
+					<div class="product-card">
+						<div class="product-card-image">
+							<img src="images/9838595.jpg" alt="Product Name">
+						</div>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$249.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
+					</div>
+					<div class="product-card">
+						<div class="product-card-image">
+							<img src="images/9838595.jpg" alt="Product Name">
+						</div>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$249.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
+					</div>
+					<div class="product-card">
+						<div class="product-card-image">
+							<img src="images/9838595.jpg" alt="Product Name">
+						</div>
+						<div class="product-card-content">
+							<h3 class="product-name">Product Name</h3>
+							<p class="product-price">
+								<span class="new-price">$249.99</span>
+							</p>
+							<button class="add-to-cart-button">Add to Cart</button>
+						</div>
 					</div>
 				</div>
 			</section>
+
 
 			<!-- Call to Action Banner Section -->
 			<section class="cta-banner">
 				<div class="cta-content">
 					<h2>Ready to Save on Your Next Purchase?</h2>
 					<p>Join our community to get exclusive offers and updates.</p>
-					<a href="signup.php" class="cta-button">Sign Up Now</a>
+					<a href="view/signup.php" class="cta-button">Sign Up Now</a>
 				</div>
 			</section>
 
@@ -222,13 +297,13 @@
 				<h2>Student Tips & Insights</h2>
 				<div class="blog-posts">
 					<div class="blog-post">
-						<img src="images/blog1.jpg" alt="Blog Post">
+						<img src="images/bg1.jpg" alt="Blog Post"><br>
 						<h3>5 Ways to Save Money on Campus</h3>
 						<p>Discover useful tips for saving money during your university years...</p>
 						<a href="blog1.php" class="read-more">Read More</a>
 					</div>
 					<div class="blog-post">
-						<img src="images/blog2.jpg" alt="Blog Post">
+						<img src="images/9838595.jpg" alt="Blog Post"><br>
 						<h3>How to Find the Best Internships</h3>
 						<p>Learn strategies to secure internships that align with your career goals...</p>
 						<a href="blog2.php" class="read-more">Read More</a>
@@ -237,24 +312,41 @@
 			</section>
 
 			<!-- Newsletter Section -->
-			<section class="newsletter-section">
-				<h2>Stay Updated!</h2>
-				<p>Subscribe to our newsletter for the latest deals and updates.</p>
-				<form action="subscribe.php" method="post">
-					<input type="email" name="email" placeholder="Enter your email" required>
-					<button type="submit">Subscribe</button>
-				</form>
-			</section>
+
 
 			<!-- Contact Section -->
-			<footer class="contact-section">
-				<h2>Contact Us</h2>
-				<p>Email: info@studentmarketplace.com | Phone: +123 456 789</p>
-				<div class="social-icons">
-					<a href="#"><img src="images/facebook-icon.svg" alt="Facebook"></a>
-					<a href="#"><img src="images/twitter-icon.svg" alt="Twitter"></a>
-					<a href="#"><img src="images/instagram-icon.svg" alt="Instagram"></a>
+			<footer class="main-footer">
+				<!-- Contact Section -->
+				<div class="contact-section">
+					<h2>Contact Us</h2><br>
+					<p>Email: info@studentmarketplace.com <br>| Phone: +233 55 256 7973 </p>
+					<div class="social-icons">
+						<a href="#"><img src="images/icons8-facebook.svg" alt="Facebook"></a>
+						<a href="#"><img src="images/icons8-twitter.svg" alt="Twitter"></a>
+						<a href="#"><img src="images/icons8-instagram.svg" alt="Instagram"></a>
+					</div>
 				</div>
+
+				<!-- Newsletter Section -->
+				<section class="newsletter-section">
+					<h2>Stay Updated!</h2>
+					<p>Subscribe to our newsletter for the latest deals and updates.</p>
+					<form action="subscribe.php" method="post">
+						<input type="email" name="email" placeholder="Enter your email" required><br>
+						<button type="submit">Subscribe</button>
+					</form>
+				</section>
+
+				<!-- Quick Links Section -->
+				<section class="quick-links-section">
+					<h2>Quick Links</h2>
+					<ul>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms & Conditions</a></li>
+						<li><a href="#">FAQs</a></li>
+					</ul>
+				</section>
 			</footer>
 		</div>
 	</div>
@@ -270,7 +362,7 @@
 		});
 	</script>
 
-	<script>
+	<!-- <script>
 		// Dynamic Content for Featured Categories and Latest Products
 		document.addEventListener('DOMContentLoaded', function() {
 			loadFeaturedCategories();
@@ -281,7 +373,7 @@
 				name: 'Electronics',
 				items: '28+ Items',
 				offer: 'MIN 20% OFF',
-				image: 'images/electronics.png'
+				image: 'images/1.svg'
 			},
 			{
 				name: 'Furniture',
@@ -293,7 +385,7 @@
 				name: 'Smart Watches',
 				items: '24+ Items',
 				offer: 'MIN 15% OFF',
-				image: 'images/smartwatch.png'
+				image: 'images/2.svg'
 			}
 		];
 
@@ -342,7 +434,7 @@
 				container.innerHTML += productCard;
 			});
 		}
-	</script>
+	</script> -->
 	<script>
 		// Scroll-triggered animations
 		document.addEventListener('DOMContentLoaded', function() {
@@ -364,6 +456,7 @@
 			handleScroll(); // Initial check on page load
 		});
 	</script>
+	<script src="js/cart_drawer.js"></script>
 </body>
 
 </html>

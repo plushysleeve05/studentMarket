@@ -1,0 +1,44 @@
+<!-- Overlay Div -->
+<div id="cart-overlay" class="cart-overlay"></div>
+
+
+<!-- cart_drawer.html -->
+<div id="cart-drawer" class="cart-drawer">
+    <div class="cart-header">
+        <h2>My Shopping Cart</h2>
+        <button id="close-cart-button" class="close-cart">&times;</button>
+    </div><br><br>
+    <div class="cart-content">
+        <!-- Cart Item -->
+        <div class="cart-item">
+            <img src="../images/9838595.jpg" alt="Organic guava juice" class="cart-item-image">
+            <div class="cart-item-details">
+                <h4>Organic guava juice</h4>
+                <p>$18.00</p>
+                <p>Size: 1kg</p>
+                <div class="quantity-container">
+                    <button class="quantity-button minus">-</button>
+                    <input type="number" value="1" class="quantity-input">
+                    <button class="quantity-button plus">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="cart-footer">
+            <textarea placeholder="Order special instructions"></textarea>
+            <div class="subtotal">
+                <p>Subtotal:</p>
+                <p>$18.00 USD</p>
+            </div>
+            <div class="terms">
+                <input type="checkbox" id="terms-checkbox">
+                <label for="terms-checkbox">I have read and agree with the <a href="#">terms & condition</a>.</label>
+            </div>
+            <div class="cart-actions">
+                <button class="view-cart-button">View Cart</button>
+                <button class="checkout-button">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>

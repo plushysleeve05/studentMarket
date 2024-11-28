@@ -108,17 +108,6 @@
                     <p>Already have an account? <a href="login.php">Login</a></p>
                 </div>
             </div>
-
-            <!-- Contact Section -->
-            <footer class="contact-section">
-                <h2>Contact Us</h2>
-                <p>Email: info@studentmarketplace.com | Phone: +123 456 789</p>
-                <div class="social-icons">
-                    <a href="#"><img src="images/facebook-icon.svg" alt="Facebook"></a>
-                    <a href="#"><img src="images/twitter-icon.svg" alt="Twitter"></a>
-                    <a href="#"><img src="images/instagram-icon.svg" alt="Instagram"></a>
-                </div>
-            </footer>
         </div>
     </div>
 
