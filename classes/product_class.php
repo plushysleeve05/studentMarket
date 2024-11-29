@@ -1,5 +1,5 @@
 <?php
-include_once '../settings/db_class.php';  // Include the db_connection class
+include_once(dirname(__DIR__). '../settings/db_class.php') ;  // Include the db_connection class
 
 class Product
 {
@@ -14,7 +14,8 @@ class Product
 
     public function getAllProducts()
     {
-        $sql = "SELECT * FROM products";
+        $sql = "SELECT p.*, c.cat_name FROM products p
+            INNER JOIN categories c ON p.product_cat = c.cat_id";
         return $this->db->db_fetch_all($sql);
     }
 

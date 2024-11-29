@@ -35,33 +35,26 @@ function authenticateCustomerController($email, $password)
     // Get customer data by email
     $existingCustomer = $customer->getCustomerByEmail($email);
 
-    // Verify the password and customer details
-    if ($existingCustomer && password_verify($password, $existingCustomer['customer_pass'])) {
-        session_start();
-        $_SESSION['customer_id'] = $existingCustomer['customer_id'];
-        return true; // Login successful
+    if ($existingCustomer) {
+        // Verify the password and customer details
+        if (password_verify($password, $existingCustomer['customer_pass'])) {
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
+            $_SESSION['customer_id'] = $existingCustomer['customer_id'];
+            $_SESSION['customer_name'] = $existingCustomer['customer_name']; // Store name for display
+            $_SESSION['user_email'] = $existingCustomer['customer_email'];  // Store email if needed
+
+            // Debugging session details
+            error_log("Login successful. Session data: " . print_r($_SESSION, true));
+
+            return true; // Login successful
+        } else {
+            error_log("Password verification failed for email: " . $email);
+            return false; // Password incorrect
+        }
     } else {
-        return false; // Login failed
+        error_log("No customer found with email: " . $email);
+        return false; // Email not found
     }
-}
-
-// Get Customer by ID Controller
-function getCustomerByIDController($customer_id)
-{
-    global $customer;
-    return $customer->getCustomerByID($customer_id);
-}
-
-// Update Customer Controller
-function updateCustomerController($customer_id, $name, $email, $country, $city, $contact, $image)
-{
-    global $customer;
-    return $customer->updateCustomer($customer_id, $name, $email, $country, $city, $contact, $image);
-}
-
-// Delete Customer Controller
-function deleteCustomerController($customer_id)
-{
-    global $customer;
-    return $customer->deleteCustomer($customer_id);
 }

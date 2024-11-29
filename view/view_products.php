@@ -1,9 +1,31 @@
-<?php include '../view/cart_drawer.html'; ?>
+<?php
+session_start(); // Start session to check login status
+include '../view/cart_drawer.html';
+include_once '../controllers/product_controller.php';
+include_once '../controllers/categories_controller.php'; // Include categories controller to fetch categories
 
+// Debugging: Print session data to the console
+if (isset($_SESSION['customer_id'])) {
+    error_log("Session ID is set. Customer ID: " . $_SESSION['customer_id']);
+    error_log("Session Name: " . (isset($_SESSION['customer_name']) ? $_SESSION['customer_name'] : 'not set'));
+} else {
+    error_log("User is not logged in. Redirecting to login page.");
+    header("Location: ../view/login.php");
+    exit();
+}
 
+// Fetch categories from the database
+$categories = getAllCategoriesController();
 
+// Fetch all products from the database
+$products = getAllProductsController();
 
-
+// // Debugging: Print categories and products
+// echo "<pre>";
+// print_r($categories); // This will print all category fields to check if they are retrieved correctly
+// print_r($products); // This will print all product fields to check if they are retrieved correctly
+// echo "</pre>";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,20 +36,16 @@
     <title>View Products</title>
     <link rel="stylesheet" href="../css/products-styles.css">
     <link rel="stylesheet" href="../css/cart_drawer_styles.css">
-
 </head>
 
 <body>
     <div class="main-container">
-        <!-- main page below -->
         <div class="middle-div">
             <nav class="navigation">
                 <div class="left-div"></div>
-                <!-- logo placeholder -->
                 <img src="../images/STMarketPlace2.svg" alt="Logo" class="nav-logo" />
                 <nav class="n-two">
                     <div class="left-div"></div>
-                    <!-- Navigation Links -->
                     <ul>
                         <li><a href="../index.php">Home</a></li>
                         <li><a href="products.php">Products</a></li>
@@ -36,26 +54,28 @@
                     </ul>
                     <div class="right-div"></div>
                 </nav>
-                <!-- Search Bar -->
                 <form action="search.php" method="get" class="search-bar">
                     <input type="text" name="query" placeholder="Search...">
                 </form>
-                <!-- Cart and Account Buttons -->
                 <div class="nav-icons">
-                    <div id="open-cart-button" class="cart-button">
+                    <div class="cart-button" id="open-cart-button">
                         <img src="../images/cart.svg" alt="Cart" />
                     </div>
-                    <a href="view/signup.php" class="account-button">
-                        <img src="../images/profile2.svg" alt="Account" />
-                    </a>
+                    <?php if (isset($_SESSION['customer_name'])): ?>
+                        <a href="../view/customer_profile.php" class="logout-button"><?php echo htmlspecialchars($_SESSION['customer_name']); ?> - View Profile</a>
+                    <?php else: ?>
+                        <a href="../view/signup.php" class="account-button">
+                            <img src="../images/profile2.svg" alt="Account" />
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <div class="right-div"></div>
             </nav>
 
             <div class="login-banner">
                 <div class="banner-content">
-                    <h1>Product - name of category being displayed shoyld go here</h1>
-                    <p>small fact</p>
+                    <h1 id="product-header">All Products</h1>
+                    <p>Explore our range of products available for students</p>
                 </div>
             </div>
 
@@ -65,38 +85,20 @@
                     <!-- Categories Checklist -->
                     <h3>Categories</h3>
                     <form id="category-filter-form">
-                        <div class="filter-category">
-                            <input type="checkbox" id="creamy-pasta" name="category" value="Creamy Pasta">
-                            <label for="creamy-pasta">Creamy Pasta (15)</label>
-                        </div>
-                        <div class="filter-category">
-                            <input type="checkbox" id="croissant" name="category" value="Croissant">
-                            <label for="croissant">Croissant (12)</label>
-                        </div>
-                        <div class="filter-category">
-                            <input type="checkbox" id="diamond-rings" name="category" value="Diamond Rings">
-                            <label for="diamond-rings">Diamond Rings (9)</label>
-                        </div>
-                        <div class="filter-category">
-                            <input type="checkbox" id="disc-brake-sw" name="category" value="Disc Brack SW">
-                            <label for="disc-brake-sw">Disc Brack SW (15)</label>
-                        </div>
-                        <div class="filter-category">
-                            <input type="checkbox" id="dog-food" name="category" value="Dog Food">
-                            <label for="dog-food">Dog Food (20)</label>
-                        </div>
-                        <div class="filter-category">
-                            <input type="checkbox" id="donuts" name="category" value="Donuts">
-                            <label for="donuts">Donuts (12)</label>
-                        </div>
-                        <div class="filter-category">
-                            <input type="checkbox" id="double-bed" name="category" value="Double Bed">
-                            <label for="double-bed">Double Bed (15)</label>
-                        </div>
-                        <div class="filter-category">
-                            <input type="checkbox" id="dressing" name="category" value="Dressing">
-                            <label for="dressing">Dressing (15)</label>
-                        </div>
+                        <?php
+                        // Loop through the categories and display them dynamically
+                        if ($categories && count($categories) > 0) {
+                            foreach ($categories as $category) {
+                                echo '
+                                <div class="filter-category">
+                                    <input type="checkbox" class="category-checkbox" id="category-' . htmlspecialchars($category['cat_id']) . '" name="category[]" value="' . htmlspecialchars($category['cat_id']) . '">
+                                    <label for="category-' . htmlspecialchars($category['cat_id']) . '">' . htmlspecialchars($category['cat_name']) . '</label>
+                                </div>';
+                            }
+                        } else {
+                            echo '<p>No categories available</p>';
+                        }
+                        ?>
                     </form>
 
                     <h3>Price Range</h3>
@@ -107,50 +109,15 @@
                         <input type="number" id="price-max" name="price-max" min="0" placeholder="1000">
                         <button type="button" id="apply-price-filter">Apply</button>
                     </form>
-
-
-                    <!-- Size Checklist -->
-                    <h3>Filter</h3>
-                    <p>22 products</p>
-                    <h3>Size</h3>
-                    <form id="size-filter-form">
-                        <div class="filter-size">
-                            <input type="checkbox" id="size-small" name="size" value="Small">
-                            <label for="size-small">Small</label>
-                        </div>
-                        <div class="filter-size">
-                            <input type="checkbox" id="size-medium" name="size" value="Medium">
-                            <label for="size-medium">Medium</label>
-                        </div>
-                        <div class="filter-size">
-                            <input type="checkbox" id="size-large" name="size" value="Large">
-                            <label for="size-large">Large</label>
-                        </div>
-                    </form>
-
-
-                    <h3>Availability</h3>
-                    <form id="availability-filter-form">
-                        <div class="filter-availability">
-                            <input type="checkbox" id="in-stock" name="availability" value="In Stock">
-                            <label for="in-stock">In Stock</label>
-                        </div>
-                        <div class="filter-availability">
-                            <input type="checkbox" id="out-of-stock" name="availability" value="Out of Stock">
-                            <label for="out-of-stock">Out of Stock</label>
-                        </div>
-                    </form>
-
                 </div>
-
 
                 <!-- Product listings on the right -->
                 <div class="product-listings">
                     <div class="product-header">
-                        <h2>Name of chosen categories</h2>
+                        <h2 id="product-header-title">All Products</h2>
                         <div class="sort-options">
                             <span>Sort by:</span>
-                            <select>
+                            <select id="sort-products">
                                 <option value="alphabetically">Alphabetically, A-Z</option>
                                 <option value="price-asc">Price: Low to High</option>
                                 <option value="price-desc">Price: High to Low</option>
@@ -158,51 +125,130 @@
                         </div>
                     </div>
 
-                    <div class="products-grid">
-                        <!-- Example of Product Listings -->
-                        <div class="product-card">
-                            <div class="product-card-image">
-                                <img src="../images/1.svg" alt="Sample Product">
-                                <!-- <span class="discount-tag">50% OFF</span> -->
-                            </div>
-                            <div class="product-card-content">
-                                <h3 class="product-name">100% Organic Lemon</h3>
-                                <p class="product-price">
-                                    <span class="new-price">$22.00</span>
-                                </p>
-                                <div class="quantity-section">
-                                    <button class="quantity-button minus">-</button>
-                                    <input type="number" class="quantity-input" value="1" min="1">
-                                    <button class="quantity-button plus">+</button>
-                                </div>
-                                <button class="add-to-cart-button">Add to Cart</button>
-                            </div>
-                        </div>
+                    <div class="products-grid" id="products-grid">
+                        <?php
+                        // Display products dynamically
+                        if ($products && count($products) > 0) {
+                            foreach ($products as $product) {
+                                // Displaying each product card with necessary data attributes for filtering
+                                echo '<div class="product-card" data-category="' . $product['product_cat'] . '" data-price="' . $product['product_price'] . '">';
+                                echo '<div class="product-card-image">';
+                                echo '<img src="' . htmlspecialchars($product['product_image']) . '" alt="' . htmlspecialchars($product['product_title']) . '">';
+                                echo '</div>';
+                                echo '<div class="product-card-content">';
+                                echo '<h3 class="product-name">' . htmlspecialchars($product['product_title']) . '</h3>';
+                                echo '<p class="product-category">' . htmlspecialchars($product['cat_name']) . '</p>'; // Display category name
+                                echo '<p class="product-price"><span class="new-price">$' . number_format($product['product_price'], 2) . '</span></p>';
+                                echo '<div class="quantity-section">';
+                                echo '<button class="quantity-button minus">-</button>';
+                                echo '<input type="number" class="quantity-input" value="1" min="1">';
+                                echo '<button class="quantity-button plus">+</button>';
+                                echo '</div>';
+                                echo '<button class="add-to-cart-button">Add to Cart</button>';
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                        } else {
+                            echo "<p>No products found</p>";
+                        }
+                        ?>
                     </div>
-
-
                 </div>
             </div>
 
-
-
-
-
-
-
             <!-- Contact Section -->
-            <footer class="contact-section">
-                <h2>Contact Us</h2>
-                <p>Email: info@studentmarketplace.com | Phone: +123 456 789</p>
-                <div class="social-icons">
-                    <a href="#"><img src="images/facebook-icon.svg" alt="Facebook"></a>
-                    <a href="#"><img src="images/twitter-icon.svg" alt="Twitter"></a>
-                    <a href="#"><img src="images/instagram-icon.svg" alt="Instagram"></a>
+            <footer class="main-footer">
+                <!-- Contact Section -->
+                <div class="contact-section">
+                    <h2>Contact Us</h2><br>
+                    <p>Email: info@studentmarketplace.com <br>| Phone: +233 55 256 7973 </p>
+                    <div class="social-icons">
+                        <a href="#"><img src="images/icons8-facebook.svg" alt="Facebook"></a>
+                        <a href="#"><img src="images/icons8-twitter.svg" alt="Twitter"></a>
+                        <a href="#"><img src="images/icons8-instagram.svg" alt="Instagram"></a>
+                    </div>
                 </div>
+
+                <!-- Newsletter Section -->
+                <section class="newsletter-section">
+                    <h2>Stay Updated!</h2>
+                    <p>Subscribe to our newsletter for the latest deals and updates.</p>
+                    <form action="subscribe.php" method="post">
+                        <input type="email" name="email" placeholder="Enter your email" required><br>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </section>
+
+                <!-- Quick Links Section -->
+                <section class="quick-links-section">
+                    <h2>Quick Links</h2>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </section>
             </footer>
         </div>
     </div>
+
     <script src="../js/cart_drawer.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const categoryCheckboxes = document.querySelectorAll(".category-checkbox");
+            const priceMinInput = document.getElementById("price-min");
+            const priceMaxInput = document.getElementById("price-max");
+            const applyPriceFilterButton = document.getElementById("apply-price-filter");
+            const productsGrid = document.getElementById("products-grid");
+            const productHeaderTitle = document.getElementById("product-header-title");
+
+            function filterProducts() {
+                const selectedCategories = Array.from(categoryCheckboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.value);
+
+                const minPrice = parseFloat(priceMinInput.value) || 0;
+                const maxPrice = parseFloat(priceMaxInput.value) || Infinity;
+
+                let visibleProductCount = 0;
+
+                productsGrid.querySelectorAll(".product-card").forEach(card => {
+                    const productCategory = card.getAttribute("data-category");
+                    const productPrice = parseFloat(card.getAttribute("data-price"));
+
+                    const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(productCategory);
+                    const priceMatch = productPrice >= minPrice && productPrice <= maxPrice;
+
+                    if (categoryMatch && priceMatch) {
+                        card.style.display = "flex"; // Display matching product
+                        visibleProductCount++;
+                    } else {
+                        card.style.display = "none"; // Hide non-matching product
+                    }
+                });
+
+                // Update header based on the filters
+                if (selectedCategories.length > 0) {
+                    productHeaderTitle.textContent = selectedCategories.join(", ");
+                } else {
+                    productHeaderTitle.textContent = "All Products";
+                }
+
+                // Optionally, show a message if no products match
+                if (visibleProductCount === 0) {
+                    productsGrid.innerHTML = "<p>No products found matching your criteria.</p>";
+                }
+            }
+
+            // Event listeners for filtering
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener("change", filterProducts);
+            });
+
+            applyPriceFilterButton.addEventListener("click", filterProducts);
+        });
+    </script>
 </body>
 
 </html>

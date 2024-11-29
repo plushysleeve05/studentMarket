@@ -1,5 +1,5 @@
 <?php
-include_once '../classes/product_class.php';
+include_once(dirname(__DIR__). '/classes/product_class.php');
 
 $product = new Product();
 
@@ -30,14 +30,16 @@ function addProductController()
     }
 }
 
+// Get All Products Controller
+function getAllProductsController()
+{
+    global $product;
+    return $product->getAllProducts();
+}
+
+// Delete Product Controller
 function deleteProductById($product_id)
 {
-    // Create an instance of the Product class
-    $product = new Product();
-
-    // Call the deleteProduct function from the Product class
-    $result = $product->deleteProduct($product_id);
-
-    // Return the result (true if deletion was successful, false otherwise)
-    return $result;
+    global $product;
+    return $product->deleteProduct($product_id);
 }

@@ -1,4 +1,13 @@
-<?php include 'view/cart_drawer.html'; ?>
+<?php
+session_start(); // Start the session
+
+include 'view/cart_drawer.html';
+include 'controllers/categories_controller.php';
+include_once 'controllers/product_controller.php';
+
+// Get all categories using the controller function
+$categories = getAllCategoriesController();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,10 +25,10 @@
 </script>
 
 <body>
-	<!-- HTML for Preloader -->
+	<!-- HTML for Preloader
 	<div id="preloader" style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; background-color: #ffffff; z-index: 1000;">
 		<p>Loading...</p>
-	</div>
+	</div> -->
 
 	<div class="main-container">
 		<!-- main page below -->
@@ -43,17 +52,26 @@
 				<form action="search.php" method="get" class="search-bar">
 					<input type="text" name="query" placeholder="Search...">
 				</form>
-				<!-- Cart and Account Buttons -->
+				<!-- Cart, Account, and Logout Button -->
 				<div class="nav-icons">
 					<div class="cart-button" id="open-cart-button">
 						<img src="images/cart.svg" alt="Cart" />
 					</div>
-					<a href="view/signup.php" class="account-button">
-						<img src="images/profile2.svg" alt="Account" />
-					</a>
+					<?php if (isset($_SESSION['username'])): ?>
+						<a href="view/account.php" class="account-button">
+							<img src="images/profile2.svg" alt="Account" />
+						</a>
+						<span class="username-display"><?php echo htmlspecialchars($_SESSION['customer_name']); ?></span>
+						<a href="action/logout.php" class="logout-button">Logout</a>
+					<?php else: ?>
+						<a href="view/login.php" class="account-button">
+							<img src="images/profile2.svg" alt="Login" />
+						</a>
+					<?php endif; ?>
 				</div>
 				<div class="right-div"></div>
 			</nav>
+
 
 			<!-- hero section -->
 			<div class="hero-sec-container">
@@ -61,7 +79,7 @@
 					<h1 class="catchphrase">Buy, Sell, and Save – Just for Students!</h1>
 				</div>
 				<div class="hero-buttons">
-					<a href="products.php" class="hero-button">Shop Now</a>
+					<a href="view/view_products.php" class="hero-button">Shop Now</a>
 					<a href="view/signup.php" class="hero-button-secondary">Join the community</a>
 				</div>
 			</div>
@@ -97,70 +115,30 @@
 			<div class="featured-categories">
 				<div class="carousel-wrapper">
 					<div class="categories-card-container">
-						<div class="categories-card">
-							<div class="card-content">
-								<div class="card-image">
-									<img src="images/1.svg" alt="Electronics">
-								</div>
-								<h3 class="category-title">Electronics</h3>
-								<p class="category-items">28+ Items</p>
-								<span class="category-offer">MIN 20% OFF</span>
-							</div>
-						</div>
 
-						<div class="categories-card">
-							<div class="card-content">
-								<div class="card-image">
-									<img src="/images/bg1.jpg" alt="#">
-								</div>
-								<h3 class="category-title">Furniture</h3>
-								<p class="category-items">30+ Items</p>
-								<span class="category-offer">MIN 30% OFF</span>
-							</div>
-						</div>
-						<div class="categories-card">
-							<div class="card-content">
-								<div class="card-image">
-									<img src="images/3.svg" alt="Furniture">
-								</div>
-								<h3 class="category-title">Furniture</h3>
-								<p class="category-items">30+ Items</p>
-								<span class="category-offer">MIN 30% OFF</span>
-							</div>
-						</div>
-						<div class="categories-card">
-							<div class="card-content">
-								<div class="card-image">
-									<img src="images/furniture.png" alt="Furniture">
-								</div>
-								<h3 class="category-title">Furniture</h3>
-								<p class="category-items">30+ Items</p>
-								<span class="category-offer">MIN 30% OFF</span>
-							</div>
-						</div>
-						<div class="categories-card">
-							<div class="card-content">
-								<div class="card-image">
-									<img src="images/furniture.png" alt="Furniture">
-								</div>
-								<h3 class="category-title">Furniture</h3>
-								<p class="category-items">30+ Items</p>
-								<span class="category-offer">MIN 30% OFF</span>
-							</div>
-						</div>
-						<div class="categories-card">
-							<div class="card-content">
-								<div class="card-image">
-									<img src="images/furniture.png" alt="Furniture">
-								</div>
-								<h3 class="category-title">Furniture</h3>
-								<p class="category-items">30+ Items</p>
-								<span class="category-offer">MIN 30% OFF</span>
-							</div>
-						</div>
+						<?php
+						// Loop through the categories and display them
+						foreach ($categories as $category) {
+							echo '
+                <div class="categories-card">
+                    <div class="card-content">
+                        <div class="card-image">
+                            <img src="../images/default-category.png" alt="' . htmlspecialchars($category['cat_name']) . '">
+                        </div>
+                        <h3 class="category-title">' . htmlspecialchars($category['cat_name']) . '</h3>
+                        <p class="category-items">30+ Items</p> <!-- Placeholder, replace with actual item count if available -->
+                        <span class="category-offer">MIN 20% OFF</span> <!-- Placeholder, you can make this dynamic -->
+                    </div>
+                </div>';
+						}
+						?>
+
 					</div>
 				</div>
 			</div>
+
+
+
 
 			<!-- Benefits Section -->
 			<section class="benefits-section">
@@ -183,104 +161,41 @@
 			<section class="latest-products">
 				<h2 class="ft-text">Latest Listings</h2><br>
 				<div class="products-grid">
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/bg1.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$199.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/9838595.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$249.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/9838595.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$249.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/9838595.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$249.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/9838595.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$249.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/9838595.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$249.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/9838595.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$249.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
-					<div class="product-card">
-						<div class="product-card-image">
-							<img src="images/9838595.jpg" alt="Product Name">
-						</div>
-						<div class="product-card-content">
-							<h3 class="product-name">Product Name</h3>
-							<p class="product-price">
-								<span class="new-price">$249.99</span>
-							</p>
-							<button class="add-to-cart-button">Add to Cart</button>
-						</div>
-					</div>
+					<?php
+					// include_once(dirname(__DIR__). '/controllers/product_controller.php');
+					$products = getAllProductsController();
+
+					// Check if there are products available
+					if ($products && count($products) > 0) {
+						// Display the first 8 products (or fewer if less than 8 available)
+						$count = 0;
+						foreach ($products as $product) {
+							if ($count >= 8) {
+								break;
+							}
+					?>
+							<div class="product-card">
+								<div class="product-card-image">
+									<img src="<?php echo htmlspecialchars($product['product_image']); ?>" alt="<?php echo htmlspecialchars($product['product_title']); ?>">
+								</div>
+								<div class="product-card-content">
+									<h3 class="product-name"><?php echo htmlspecialchars($product['product_title']); ?></h3>
+									<p class="product-price">
+										<span class="new-price">$<?php echo number_format($product['product_price'], 2); ?></span>
+									</p>
+									<button class="add-to-cart-button">Add to Cart</button>
+								</div>
+							</div>
+					<?php
+							$count++;
+						}
+					} else {
+						echo "<p>No products available at the moment.</p>";
+					}
+					?>
 				</div>
 			</section>
+
 
 
 			<!-- Call to Action Banner Section -->
@@ -300,13 +215,13 @@
 						<img src="images/bg1.jpg" alt="Blog Post"><br>
 						<h3>5 Ways to Save Money on Campus</h3>
 						<p>Discover useful tips for saving money during your university years...</p>
-						<a href="blog1.php" class="read-more">Read More</a>
+						<a href="https://www.forbes.com/sites/enochomololu/2023/09/03/7-money-saving-hacks-for-college-students-budgeting-tips-and-tricks/" class="read-more">Read More</a>
 					</div>
 					<div class="blog-post">
 						<img src="images/9838595.jpg" alt="Blog Post"><br>
 						<h3>How to Find the Best Internships</h3>
 						<p>Learn strategies to secure internships that align with your career goals...</p>
-						<a href="blog2.php" class="read-more">Read More</a>
+						<a href="https://tallo.com/internships-apprenticeships/how-to-find-internship/" class="read-more">Read More</a>
 					</div>
 				</div>
 			</section>

@@ -322,7 +322,7 @@ ol {
 }
 
 .category-title {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   margin: 10px 0 5px;
   color: #36582b;
@@ -416,25 +416,6 @@ ol {
   background-color: #6da54c57;
 }
 
-.testimonials-container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.testimonial {
-  background: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-}
-
-.testimonial h4 {
-  margin-top: 10px;
-  font-weight: bold;
-}
 
 /* Benefits Section */
 .benefits-section {
@@ -472,31 +453,28 @@ ol {
 .products-grid {
     margin: 0 200px 0 200px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 2fr));
+    gap: 22px;
     /* margin: 20px; */
     justify-content: center;
     align-items: center;
 }
 
-/* Redesigned Product Card Styling */
+/*  Product Card Styling */
 .product-card {
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 100%;
-    max-width: 300px;
+    height: 40vh;
     margin: auto;
+    gap: 20px;
 }
 
 .product-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .product-card-image {
@@ -509,18 +487,6 @@ ol {
     display: block;
     object-fit: cover;
 }
-
-/* .discount-tag {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #ff6600;
-    color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    font-weight: bold;
-} */
 
 .product-card-content {
     padding: 20px;
@@ -701,4 +667,29 @@ ol {
 .blog-section h2{
     margin: 0 0 30px 200px;
     font-size: 40px;
+}
+
+
+.username-display {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #4b6043; /* Greenish color to match your brand */
+    font-weight: bold;
+}
+
+.logout-button {
+    margin-left: 10px;
+    font-size: 16px;
+    color: #4b6043;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #4b6043;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #000000;
+    color: #ffffff;
 }

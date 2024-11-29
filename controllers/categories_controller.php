@@ -1,5 +1,5 @@
 <?php
-include_once '../classes/categories_class.php';
+include_once(dirname(__DIR__) . '/classes/categories_class.php');
 
 $category = new Category();
 

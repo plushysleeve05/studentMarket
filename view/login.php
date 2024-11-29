@@ -8,12 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Authenticate the customer using the function
     if (authenticateCustomerController($email, $password)) {
-        header("Location: ../view/view_products.php"); // Redirect to dashboard on successful login
+        header("Location: ../view/view_products.php"); // Redirect to products page on successful login
         exit();
     } else {
         echo "<script>alert('Invalid email or password!');</script>";
     }
 }
+
+// Debugging: Check current session values
+error_log("Session after attempting login: " . print_r($_SESSION, true));
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Navigation Links -->
                     <ul>
                         <li><a href="../index.php">Home</a></li>
-                        <li><a href="products.php">Products</a></li>
+                        <li><a href="view_products.php">Products</a></li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -68,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
 
-
             <!-- form section -->
             <div class="auth-container">
                 <form action="login.php" method="POST">
@@ -82,15 +84,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <button type="submit">Login</button>
                     <a class="forgot-password" href="signup.php">Forgot Password?</a>
-
                 </form>
 
                 <div class="signup-container">
                     <p>Don't have an account? <a href="signup.php">Sign up</a></p>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -104,8 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }, 1000);
         });
     </script>
-
-
 </body>
 
 </html>
