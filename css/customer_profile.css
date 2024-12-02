@@ -174,7 +174,7 @@ ol {
 /* Contact Section */
 .contact-section {
   padding: 40px;
-  background-color: #6da54c57;
+  /* background-color: #6da54c57; */
   text-align: center;
   height: 30vh;
 }
@@ -427,5 +427,91 @@ ol {
     color: #36582b;
 }
 
+/* Footer Styling */
+.main-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 40px;
+    background-color: #6da54c57;
+    height: 40vh;
+}
 
+.main-footer h2{
+    margin: 0 0 0px 0px;
+    font-size: 30px;
+}
 
+/* Contact Section Styling */
+.contact-section {
+    flex: 1 1 300px;
+    padding: 20px;
+    text-align: center;
+}
+
+.contact-section .social-icons {
+    margin-top: 20px;
+}
+
+.contact-section .social-icons a {
+    margin: 0 10px;
+    display: inline-block;
+}
+
+.contact-section .social-icons img {
+    width: 40px;
+}
+
+/* Newsletter Section Styling */
+.newsletter-section {
+    flex: 1 1 300px;
+    padding: 20px;
+    text-align: center;
+}
+
+.newsletter-section form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.newsletter-section input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.newsletter-section button {
+    background-color: #65a551;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Quick Links Section Styling */
+.quick-links-section {
+    flex: 1 1 200px;
+    padding: 20px;
+    text-align: center;
+}
+
+.quick-links-section ul {
+    list-style: none;
+}
+
+.quick-links-section ul li {
+    margin: 10px 0;
+}
+
+.quick-links-section ul li a {
+    color: #4b6043;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.quick-links-section ul li a:hover {
+    color: #36582b;
+}

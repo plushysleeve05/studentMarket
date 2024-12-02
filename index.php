@@ -25,9 +25,9 @@ $categories = getAllCategoriesController();
 </script>
 
 <body>
-	<!-- HTML for Preloader
-	<div id="preloader" style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; background-color: #ffffff; z-index: 1000;">
-		<p>Loading...</p>
+	<!-- HTML for Preloader -->
+	<!-- <div id="preloader" style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; background-color: #ffffff; z-index: 3000;">
+		<img src="images/mainbg.svg" alt="">
 	</div> -->
 
 	<div class="main-container">
@@ -57,12 +57,13 @@ $categories = getAllCategoriesController();
 					<div class="cart-button" id="open-cart-button">
 						<img src="images/cart.svg" alt="Cart" />
 					</div>
-					<?php if (isset($_SESSION['username'])): ?>
+					<div class="number-of-items-in-cart"></div>
+					<?php if (isset($_SESSION['customer_id'])): ?>
 						<a href="view/account.php" class="account-button">
 							<img src="images/profile2.svg" alt="Account" />
 						</a>
 						<span class="username-display"><?php echo htmlspecialchars($_SESSION['customer_name']); ?></span>
-						<a href="action/logout.php" class="logout-button">Logout</a>
+						<a href="actions/logout.php" class="logout-button">Logout</a>
 					<?php else: ?>
 						<a href="view/login.php" class="account-button">
 							<img src="images/profile2.svg" alt="Login" />
@@ -274,101 +275,6 @@ $categories = getAllCategoriesController();
 			setTimeout(() => {
 				preloader.style.display = 'none';
 			}, 1000);
-		});
-	</script>
-
-	<!-- <script>
-		// Dynamic Content for Featured Categories and Latest Products
-		document.addEventListener('DOMContentLoaded', function() {
-			loadFeaturedCategories();
-			loadLatestProducts();
-		});
-
-		const categoriesData = [{
-				name: 'Electronics',
-				items: '28+ Items',
-				offer: 'MIN 20% OFF',
-				image: 'images/1.svg'
-			},
-			{
-				name: 'Furniture',
-				items: '30+ Items',
-				offer: 'MIN 30% OFF',
-				image: 'images/furniture.png'
-			},
-			{
-				name: 'Smart Watches',
-				items: '24+ Items',
-				offer: 'MIN 15% OFF',
-				image: 'images/2.svg'
-			}
-		];
-
-		const productsData = [{
-				name: 'Product 1',
-				price: '$199.99',
-				image: 'images/product1.jpg'
-			},
-			{
-				name: 'Product 2',
-				price: '$249.99',
-				image: 'images/product2.jpg'
-			}
-		];
-
-		function loadFeaturedCategories() {
-			const container = document.querySelector('.categories-card-container');
-			container.innerHTML = '';
-			categoriesData.forEach(category => {
-				const card = `
-                    <div class="categories-card">
-                        <div class="card-content">
-                            <div class="card-image">
-                                <img src="${category.image}" alt="${category.name}">
-                            </div>
-                            <h3 class="category-title">${category.name}</h3>
-                            <p class="category-items">${category.items}</p>
-                            <span class="category-offer">${category.offer}</span>
-                        </div>
-                    </div>`;
-				container.innerHTML += card;
-			});
-		}
-
-		function loadLatestProducts() {
-			const container = document.querySelector('.products-grid');
-			container.innerHTML = '';
-			productsData.forEach(product => {
-				const productCard = `
-                    <div class="product-card">
-                        <img src="${product.image}" alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <p>${product.price}</p>
-                        <a href="#" class="add-to-cart-button">Add to Cart</a>
-                    </div>`;
-				container.innerHTML += productCard;
-			});
-		}
-	</script> -->
-	<script>
-		// Scroll-triggered animations
-		document.addEventListener('DOMContentLoaded', function() {
-			const elementsToAnimate = document.querySelectorAll(
-				'.flex-items, .featured-categories, .categories-card, .testimonials-section, .benefits-section, .latest-products, .cta-banner, .blog-section, .newsletter-section, .contact-section'
-			);
-
-			function handleScroll() {
-				elementsToAnimate.forEach((element) => {
-					const rect = element.getBoundingClientRect();
-					if (rect.top < window.innerHeight - 100) {
-						element.style.opacity = '1';
-						element.style.transform = 'translateY(0)';
-					}
-				});
-			}
-
-			window.addEventListener('scroll', handleScroll);
-			handleScroll(); // Initial check on page load
 		});
 	</script>
 	<script src="js/cart_drawer.js"></script>

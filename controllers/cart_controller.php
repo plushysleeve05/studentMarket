@@ -50,3 +50,27 @@ function updateProductQuantityInCartController($customer_id, $product_id, $quant
     // If quantity is 0 or invalid, remove the product from the cart
     return removeProductFromCartController($customer_id, $product_id);
 }
+
+// Calculate Total Cart Value
+function calculateCartTotalController($customer_id)
+{
+    global $cart;
+
+    // Fetch the cart items
+    $cartItems = $cart->getCartByCustomer($customer_id);
+
+    // Calculate the total
+    $total = 0;
+    foreach ($cartItems as $item) {
+        $total += $item['product_price'] * $item['qty'];
+    }
+
+    return $total;
+}
+
+function clearCartController($customer_id)
+{
+    global $cart;
+    return $cart->clearCart($customer_id);
+}
+

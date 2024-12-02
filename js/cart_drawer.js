@@ -22,3 +22,5 @@ document.addEventListener("DOMContentLoaded", () => {
     cartOverlay.classList.remove("show");
   });
 });
+
+

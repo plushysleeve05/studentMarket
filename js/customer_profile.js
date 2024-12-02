@@ -10,32 +10,29 @@ function setupSidebarLinks() {
   sidebarLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
-      const section = event.target.getAttribute("href").split("=")[1];
-      loadSectionContent(section);
+      const sectionId =
+        event.target.getAttribute("href").split("=")[1] + "-section";
+      showSelectedSection(sectionId);
     });
   });
 }
 
-// Function to dynamically load content for the selected section via AJAX
-function loadSectionContent(section) {
-  const sectionDetails = document.querySelector(".section-details");
-  sectionDetails.innerHTML = `<p>Loading...</p>`; // Temporary loading indicator
+// Function to show the selected section and hide others
+function showSelectedSection(sectionId) {
+  const allSections = document.querySelectorAll(".section-details > div");
 
-  // Make an AJAX request to fetch content from the backend
-  fetch(`get_section_content.php?section=${section}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.text(); // Expect HTML content from the server
-    })
-    .then((html) => {
-      sectionDetails.innerHTML = html; // Replace the content dynamically
-    })
-    .catch((error) => {
-      console.error("Error fetching section content:", error);
-      sectionDetails.innerHTML = `<p>Error loading content. Please try again later.</p>`;
-    });
+  // Hide all sections
+  allSections.forEach((section) => {
+    section.style.display = "none";
+  });
+
+  // Show the selected section
+  const selectedSection = document.getElementById(sectionId);
+  if (selectedSection) {
+    selectedSection.style.display = "block";
+  } else {
+    console.error(`Section with ID '${sectionId}' not found.`);
+  }
 }
 
 // Initialize the profile page functions after the DOM content has loaded
