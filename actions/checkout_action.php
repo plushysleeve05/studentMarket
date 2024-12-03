@@ -1,45 +1,47 @@
 <?php
 session_start();
 
-// Check if the customer is logged in
+include_once '../classes/order_class.php';
+include_once '../controllers/cart_controller.php';
+
 if (!isset($_SESSION['customer_id'])) {
-    header('Location: ../views/login.php');
+    echo json_encode(['success' => false, 'message' => 'You must be logged in to proceed with checkout.']);
     exit();
 }
 
 $customer_id = $_SESSION['customer_id'];
+$invoice_no = uniqid();
+$order_date = date('Y-m-d H:i:s');
+$status = "Pending";
 
-// Include necessary classes
-include_once '../classes/order_class.php';
-include_once '../classes/cart_class.php';
-
-// Instantiate Order and Cart classes
+// Create an order
 $order = new Order();
-$cart = new Cart();
+$orderId = $order->createOrder($customer_id, $invoice_no, $order_date, $status);
 
-// Step 1: Create a new order
-$invoiceNo = "INV" . uniqid();  // Generate a unique invoice number
-$orderDate = date('Y-m-d H:i:s');
-$status = "pending";
-
-// Insert the new order into the orders table
-$orderId = $order->createOrder($customer_id, $invoiceNo, $orderDate, $status);
-
-if ($orderId) {
-    // Step 2: Get the cart items for the customer
-    $cartItems = $cart->getCartByCustomer($customer_id);
-
-    // Step 3: Add each cart item to the orderdetails table
-    foreach ($cartItems as $item) {
-        $order->addOrderDetails($orderId, $item['p_id'], $item['qty']);
-    }
-
-    // Step 4: Clear the cart after transferring items to the order
-    // $cart->clearCartByCustomer($customer_id);
-
-    // Step 5: Redirect to the order confirmation page with the new order ID
-    header("Location: ../view/order_confirmation.php?order_id=" . $orderId);
+if (!$orderId) {
+    echo json_encode(['success' => false, 'message' => 'Failed to create order.']);
     exit();
-} else {
-    echo "Failed to create order. Please try again.";
 }
+
+// Fetch all cart items for this customer
+$cartItems = getCartItemsByCustomerController($customer_id);
+
+if (!$cartItems || count($cartItems) === 0) {
+    echo json_encode(['success' => false, 'message' => 'Your cart is empty.']);
+    exit();
+}
+
+// Add each cart item to the order details
+foreach ($cartItems as $item) {
+    $product_id = $item['p_id'];
+    $qty = $item['qty'];
+    if (!$order->addOrderDetails($orderId, $product_id, $qty)) {
+        echo json_encode(['success' => false, 'message' => 'Failed to add item to order details.']);
+        exit();
+    }
+}
+
+// Clear the cart after the order has been created successfully
+clearCartController($customer_id);
+
+echo json_encode(['success' => true, 'message' => 'Order successfully placed.', 'order_id' => $orderId]);

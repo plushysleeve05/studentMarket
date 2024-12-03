@@ -1,31 +1,40 @@
-<!-- <?php
-        include_once '../controllers/customer_controller.php';
-        session_start();
+<?php
+include_once '../controllers/customer_controller.php';
+session_start();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $name = $_POST['customer_name'];
-            $email = $_POST['customer_email'];
-            $password = $_POST['customer_pass'];
-            $country = $_POST['customer_country'];
-            $city = $_POST['customer_city'];
-            $contact = $_POST['customer_contact'];
-            $image = 'default.png'; // Optional image handling
-            $role = 'customer'; // Default role
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Retrieve form input values
+    $name = $_POST['customer_name'];
+    $email = $_POST['customer_email'];
+    $password = $_POST['customer_pass'];
+    $country = $_POST['customer_country'];
+    $city = $_POST['customer_city'];
+    $contact = $_POST['customer_contact'];
+    $image = 'default.png'; // Optional image handling, set to default for now
+    $role = 'customer'; // Default role
 
-            // Register the customer using the function
-            $result = registerCustomerController($name, $email, $password, $country, $city, $contact, $image, $role);
+    // Register the customer using the function
+    $result = registerCustomerController($name, $email, $password, $country, $city, $contact, $image, $role);
 
-            // Check if the registration was successful
-            if ($result === "Customer registered successfully!") {
-                $_SESSION['customer_id'] = getCustomerByIDController($email)['customer_id']; // Save customer ID to session
-                header("Location: ../view/login.php"); // Redirect after successful signup
-                exit();
-            } else {
-                // Display error message
-                echo "<script>alert('$result');</script>";
-            }
-        }
-        ?> -->
+    // Check if the registration was successful
+    if ($result === "Customer registered successfully!") {
+        // After successful registration, get the new customer by email
+        $newCustomer = $customer->getCustomerByEmail($email);
+
+        // Save customer information to the session
+        $_SESSION['customer_id'] = $newCustomer['customer_id'];
+        $_SESSION['customer_name'] = $newCustomer['customer_name'];
+        $_SESSION['user_email'] = $newCustomer['customer_email'];
+
+        // Redirect to products page after successful signup
+        header("Location: ../view/view_products.php");
+        exit();
+    } else {
+        // Display error message if registration fails
+        echo "<script>alert('$result');</script>";
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -100,8 +109,7 @@
                     <label for="customer_contact">Contact</label>
                     <input type="text" name="customer_contact" placeholder="Enter your contact number" required>
 
-                    <button type="submit">CREATE </button>
-                    
+                    <button type="submit">CREATE</button>
                 </form>
 
                 <div class="signup-container">

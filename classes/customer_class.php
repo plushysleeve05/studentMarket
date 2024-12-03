@@ -67,4 +67,25 @@ class Customer
         // Fetch the record
         return $result->fetch_assoc();
     }
+
+    // Method to update customer details
+    public function updateCustomerDetails($customerId, $name, $email, $country, $city, $contact)
+    {
+        $conn = $this->db->db_conn();
+
+        if ($conn === false) {
+            die("Database connection error");
+        }
+
+        $query = "UPDATE customer SET customer_name = ?, customer_email = ?, customer_country = ?, customer_city = ?, customer_contact = ? WHERE customer_id = ?";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("sssssi", $name, $email, $country, $city, $contact, $customerId);
+            return $stmt->execute();  // Execute and return true if successful
+        } else {
+            die("Prepare statement failed: " . $conn->error);
+        }
+    }
+
 }

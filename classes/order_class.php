@@ -1,5 +1,5 @@
 <?php
-include_once '../settings/db_class.php';  // Include the db_connection class
+include_once realpath('../settings/db_class.php');  // Include the db_connection class
 
 class Order
 {
@@ -121,10 +121,11 @@ class Order
             die("Database connection error");
         }
 
-        $query = "SELECT products.product_name, orderdetails.qty, products.price 
-                  FROM orderdetails 
-                  JOIN products ON orderdetails.product_id = products.product_id 
-                  WHERE orderdetails.order_id = ?";
+        // Update the field names in the query to match your actual products table structure
+        $query = "SELECT products.product_title, orderdetails.qty, products.product_price 
+              FROM orderdetails 
+              JOIN products ON orderdetails.product_id = products.product_id 
+              WHERE orderdetails.order_id = ?";
         $stmt = $conn->prepare($query);
 
         if ($stmt) {
@@ -141,4 +142,133 @@ class Order
             die("Prepare statement failed: " . $conn->error);
         }
     }
+
+
+    // Method to get the latest order for a specific customer
+    public function getLatestOrderForCustomer($customerId)
+    {
+        $conn = $this->db->db_conn();  // Get the MySQLi connection
+
+        if ($conn === false) {
+            die("Database connection error");
+        }
+
+        $query = "SELECT * FROM orders WHERE customer_id = ? ORDER BY order_date DESC, order_id DESC LIMIT 1";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $customerId);  // Bind the customer ID parameter
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result && $result->num_rows > 0) {
+                return $result->fetch_assoc();  // Fetch the latest order as an associative array
+            } else {
+                return null;  // Return null if no order is found
+            }
+        } else {
+            die("Prepare statement failed: " . $conn->error);
+        }
+    }
+
+    public function markOrderAsPaid($orderId)
+    {
+        $conn = $this->db->db_conn();  // Get the MySQLi connection
+
+        if ($conn === false) {
+            die("Database connection error");
+        }
+
+        $query = "UPDATE orders SET order_status = 'Paid' WHERE order_id = ?";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $orderId);
+            return $stmt->execute();  // Execute the statement and return true if successful
+        } else {
+            die("Prepare statement failed: " . $conn->error);
+        }
+    }
+
+    // Method to save payment information to the 'payment' table
+    public function savePayment($amount, $customerId, $orderId, $currency, $paymentDate)
+    {
+        $conn = $this->db->db_conn();  // Get the MySQLi connection
+
+        if ($conn === false) {
+            die("Database connection error");
+        }
+
+        $query = "INSERT INTO payment (amt, customer_id, order_id, currency, payment_date) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("diiss", $amount, $customerId, $orderId, $currency, $paymentDate);  // Bind parameters
+            if ($stmt->execute()) {
+                return true;  // Payment record inserted successfully
+            } else {
+                die("Execution failed: " . $stmt->error);
+            }
+        } else {
+            die("Prepare statement failed: " . $conn->error);
+        }
+    }
+
+    // Method to get the latest unpaid order for a customer
+    public function getLatestUnpaidOrder($customerId)
+    {
+        $conn = $this->db->db_conn();  // Get the MySQLi connection
+
+        if ($conn === false) {
+            die("Database connection error");
+        }
+
+        $query = "SELECT * FROM orders WHERE customer_id = ? AND order_status = 'pending' ORDER BY order_date DESC LIMIT 1";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $customerId);  // Bind customer ID
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result && $result->num_rows > 0) {
+                return $result->fetch_assoc();  // Return the order as an associative array
+            } else {
+                return null;  // No unpaid order found
+            }
+        } else {
+            die("Prepare statement failed: " . $conn->error);
+        }
+    }
+
+    // Method to get all orders for a specific customer
+    public function getOrdersByCustomerId($customerId)
+    {
+        $conn = $this->db->db_conn();  // Get the MySQLi connection
+
+        if ($conn === false) {
+            die("Database connection error");
+        }
+
+        $query = "SELECT * FROM orders WHERE customer_id = ?";
+        $stmt = $conn->prepare($query);
+
+        if ($stmt) {
+            $stmt->bind_param("i", $customerId);  // Bind the customer ID parameter
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result) {
+                return $result->fetch_all(MYSQLI_ASSOC);  // Fetch all orders as an associative array
+            } else {
+                return [];  // Return an empty array if the query fails
+            }
+        } else {
+            die("Prepare statement failed: " . $conn->error);
+        }
+    }
+
+
+
+    
 }

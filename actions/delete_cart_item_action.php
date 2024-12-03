@@ -1,32 +1,25 @@
 <?php
 session_start();
 
-// Check if the customer is logged in
-if (!isset($_SESSION['customer_id'])) {
-    header('Location: ../views/login.php');
-    exit();
-}
-
-$customer_id = $_SESSION['customer_id'];
-
-// Include the cart controller
 include_once '../controllers/cart_controller.php';
 
-// Get the product ID from the form submission
-if (isset($_POST['product_id'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_id = $_POST['product_id'];
+    $customer_id = $_SESSION['customer_id'] ?? null;
 
-    // Call the controller to remove the product from the cart
-    $result = removeProductFromCartController($customer_id, $product_id);
+    if ($product_id && $customer_id) {
+        // Remove product from cart
+        $success = removeProductFromCartController($customer_id, $product_id);
 
-    if ($result) {
-        // Redirect back to the cart page
-        header('Location: ../view/view_cart.php');
-        exit();
+        if ($success) {
+            echo json_encode(['success' => true, 'message' => 'Product removed successfully']);
+        } else {
+            error_log("Failed to remove product from cart: product_id = $product_id");
+            echo json_encode(['success' => false, 'message' => 'Failed to remove product from cart.']);
+        }
     } else {
-        echo "Error removing item from cart.";
+        echo json_encode(['success' => false, 'message' => 'Invalid product ID or customer session.']);
     }
 } else {
-    echo "Invalid input.";
+    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
 }
-?>

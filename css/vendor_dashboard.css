@@ -517,4 +517,182 @@ ol {
 }
 
 
+/* Product Card Styles */
+.product-card {
+    width: 300px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+}
 
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image Styling */
+.product-image {
+    width: 100%;
+    height: 200px;
+    background-color: #f4f7f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+/* Product Details Styling */
+.product-details {
+    padding: 20px;
+}
+
+.product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #4b6043;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 1.1rem;
+    color: #65a551;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.quantity-section,
+.category-section,
+.brand-section {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+/* Action Buttons Styling */
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.edit-product-button,
+.delete-product-button {
+    padding: 10px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-product-button {
+    background-color: #4b6043;
+    color: #ffffff;
+}
+
+.edit-product-button:hover {
+    background-color: #36582b;
+    transform: scale(1.05);
+}
+
+.delete-product-button {
+    background-color: #d9534f;
+    color: #ffffff;
+}
+
+.delete-product-button:hover {
+    background-color: #c9302c;
+    transform: scale(1.05);
+}
+
+/* Updated Container for Add New Product Form */
+.add-product-form-container.wide-form {
+    /* background-color: #ffffff; */
+    padding: 40px;
+    /* border-radius: 10px; */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    width: 70vw;  /* Increased width to cover more space */
+    margin: 30px auto;
+}
+
+/* Updated Form Elements Styling */
+.add-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;  /* Make each input fill the container width */
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea,
+.form-group input[type="file"] {
+    padding: 15px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #65a551;
+    outline: none;
+}
+
+.form-group select {
+    padding: 10px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+/* Updated Add Product Button Styling */
+.add-product-button {
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #65a551;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: center;  /* Center the button */
+    width: 30%;
+}
+
+.add-product-button:hover {
+    background-color: #4b6043;
+    transform: scale(1.05);
+}

@@ -58,3 +58,11 @@ function authenticateCustomerController($email, $password)
         return false; // Email not found
     }
 }
+
+// Update customer details
+function updateCustomerDetailsController($customerId, $name, $email, $country, $city, $contact)
+{
+    global $customer;
+    return $customer->updateCustomerDetails($customerId, $name, $email, $country, $city, $contact);
+}
+

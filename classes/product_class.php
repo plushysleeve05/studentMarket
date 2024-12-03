@@ -26,22 +26,25 @@ class Product
     }
 
     // Add a new product to the database
-    public function addProduct($cat, $brand, $title, $price, $desc, $image, $keywords)
+    public function addProduct($vendorId, $cat, $brand, $title, $price, $desc, $image, $keywords, $stock)
     {
-        $conn = $this->db->db_conn();
+        $conn = $this->db->db_conn(); // Get the MySQLi connection
+
         if ($conn === false) {
             die("Database connection error");
         }
 
-        $query = "INSERT INTO products (product_cat, product_brand, product_title, product_price, product_desc, product_image, product_keywords) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO products (vendor_id, product_cat, product_brand, product_title, product_price, product_desc, product_image, product_keywords, stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
+
         if ($stmt) {
-            $stmt->bind_param("iisdsss", $cat, $brand, $title, $price, $desc, $image, $keywords); // Bind values
-            return $stmt->execute();
+            $stmt->bind_param("iiisdsssi", $vendorId, $cat, $brand, $title, $price, $desc, $image, $keywords, $stock); // Bind parameters
+            return $stmt->execute(); // Execute the statement and return true if successful
         } else {
             die("Prepare statement failed: " . $conn->error);
         }
     }
+
 
     public function deleteProduct($product_id)
     {
@@ -69,5 +72,24 @@ class Product
             die("Prepare statement failed: " . $this->db->db_conn()->error);
         }
     }
+
+    public function getProductById($product_id)
+    {
+        $sql = "SELECT * FROM products WHERE product_id = ?";
+        $stmt = $this->db->db_conn()->prepare($sql);
+        $stmt->bind_param('i', $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function updateProductStock($product_id, $new_stock)
+    {
+        $sql = "UPDATE products SET stock = ? WHERE product_id = ?";
+        $stmt = $this->db->db_conn()->prepare($sql);
+        $stmt->bind_param('ii', $new_stock, $product_id);
+        return $stmt->execute();
+    }
+
 
 }

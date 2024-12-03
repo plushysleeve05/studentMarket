@@ -1,3 +1,7 @@
+<?php
+session_start(); // Start the session
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +18,7 @@
         <div class="middle-div">
             <nav class="navigation">
                 <div class="left-div"></div>
-                <!-- logo placeholder -->
+                <!-- Logo -->
                 <img src="../images/STMarketPlace2.svg" alt="Logo" class="nav-logo" />
                 <nav class="n-two">
                     <div class="left-div"></div>
@@ -31,11 +35,25 @@
                 <form action="search.php" method="get" class="search-bar">
                     <input type="text" name="query" placeholder="Search...">
                 </form>
-                <!-- Cart and Account Buttons -->
+                <!-- Cart, Account, and Logout Button -->
                 <div class="nav-icons">
-                    <a href="view/signup.php" class="account-button">
-                        <img src="../images/profile2.svg" alt="Account" />
-                    </a>
+                    <!-- Cart Button -->
+                    <div class="cart-button" id="open-cart-button">
+                        <img src="../images/cart.svg" alt="Cart" />
+                    </div>
+                    <?php if (isset($_SESSION['customer_id'])): ?>
+                        <!-- If customer is logged in, show profile and logout button -->
+                        <a href="account.php" class="account-button">
+                            <img src="../images/profile2.svg" alt="Account" />
+                        </a>
+                        <span class="username-display"><?php echo htmlspecialchars($_SESSION['customer_name']); ?></span>
+                        <a href="../actions/logout.php" class="logout-button">Logout</a>
+                    <?php else: ?>
+                        <!-- If not logged in, show login button -->
+                        <a href="login.php" class="account-button">
+                            <img src="../images/profile2.svg" alt="Login" />
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <div class="right-div"></div>
             </nav>
@@ -47,7 +65,7 @@
                 </div>
             </div>
 
-            <!-- main cart table -->
+            <!-- Main cart table -->
             <div class="cart-page-container">
                 <!-- Cart Table Section -->
                 <div class="cart-items-section">
@@ -57,27 +75,13 @@
                             <tr>
                                 <th></th>
                                 <th>Product</th>
-                                <th>Price</th>
+                                <th>Price (GHS)</th>
                                 <th>Quantity</th>
-                                <th>Total</th>
+                                <th>Total (GHS)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><img src="../images/food1.jpg" alt="Product Image"></td>
-                                <td>Product Name</td>
-                                <td>$29.00 USD</td>
-                                <td>
-                                    <div class="quantity-section">
-                                        <button type="button" class="quantity-button minus">-</button>
-                                        <input type="number" class="quantity-input" value="1" min="1">
-                                        <button type="button" class="quantity-button plus">+</button>
-                                    </div>
-                                </td>
-
-                                <td>$29.00 USD</td>
-                            </tr>
-
+                        <tbody id="cart-items">
+                            <!-- Cart items will be injected here via JavaScript -->
                         </tbody>
                     </table>
                     <button class="return-to-store-button" onclick="window.location.href='view_products.php'">Return to Store</button>
@@ -87,22 +91,18 @@
                 <div class="cart-summary-section">
                     <div class="shipping-estimate">
                         <h3>Summary</h3>
-
                     </div>
                     <div class="cart-subtotal">
                         <h3>Subtotal</h3>
-                        <p>$29.00 USD</p>
+                        <p id="cart-subtotal">GHS 0.00</p>
                         <small>Taxes and shipping calculated at checkout</small>
                     </div>
                     <button class="checkout-button">Check Out</button>
                 </div>
             </div>
-
             <!-- end of cart table -->
 
-
-            <!-- start of footer -->
-            <!-- Contact Section -->
+            <!-- Footer -->
             <footer class="main-footer">
                 <!-- Contact Section -->
                 <div class="contact-section">
@@ -114,7 +114,6 @@
                         <a href="#"><img src="images/icons8-instagram.svg" alt="Instagram"></a>
                     </div>
                 </div>
-
                 <!-- Newsletter Section -->
                 <section class="newsletter-section">
                     <h2>Stay Updated!</h2>
@@ -124,7 +123,6 @@
                         <button type="submit">Subscribe</button>
                     </form>
                 </section>
-
                 <!-- Quick Links Section -->
                 <section class="quick-links-section">
                     <h2>Quick Links</h2>
@@ -136,54 +134,78 @@
                     </ul>
                 </section>
             </footer>
-            <!-- end of footer -->
-
+            <!-- End of Footer -->
 
         </div>
     </div>
 
     <script>
-        // JavaScript to Remove Preloader After Page Load
-        window.addEventListener('load', function() {
-            const preloader = document.getElementById('preloader');
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 3000);
+        document.addEventListener("DOMContentLoaded", () => {
+
+            loadCartItems();
+
+            function loadCartItems() {
+                fetch('../actions/fetch_cart_items.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Cart items data:', data); // Debugging line
+
+                        const cartItemsContainer = document.getElementById("cart-items");
+                        cartItemsContainer.innerHTML = '';
+
+                        if (data.success && data.cart_items && data.cart_items.length > 0) {
+                            let subtotal = 0;
+
+                            data.cart_items.forEach(item => {
+                                const itemTotal = item.product_price * item.qty;
+                                subtotal += itemTotal;
+
+                                cartItemsContainer.innerHTML += `
+                                    <tr class="cart-item" data-product-id="${item.p_id}">
+                                        <td><img src="${item.product_image}" alt="${item.product_title}"></td>
+                                        <td>${item.product_title}</td>
+                                        <td>GHS ${item.product_price.toFixed(2)}</td>
+                                        <td>${item.qty}</td>
+                                        <td>GHS ${itemTotal.toFixed(2)}</td>
+                                    </tr>
+                                `;
+                            });
+
+                            document.getElementById("cart-subtotal").textContent = `GHS ${subtotal.toFixed(2)}`;
+                        } else {
+                            console.warn(data.message || 'No items found in cart.');
+                            cartItemsContainer.innerHTML = `<tr><td colspan="5">${data.message || 'Your cart is empty.'}</td></tr>`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching cart items:', error);
+                    });
+            }
         });
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Select all quantity buttons
-            const minusButtons = document.querySelectorAll(".quantity-button.minus");
-            const plusButtons = document.querySelectorAll(".quantity-button.plus");
-
-            // Function to decrease quantity
-            minusButtons.forEach(button => {
-                button.addEventListener("click", () => {
-                    const quantityInput = button.nextElementSibling; // The input is next to the minus button
-                    let currentValue = parseInt(quantityInput.value);
-
-                    if (currentValue > parseInt(quantityInput.min)) {
-                        quantityInput.value = currentValue - 1;
+        document.querySelector('.checkout-button').addEventListener('click', () => {
+            fetch('../actions/checkout_action.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.href = `order_confirmation.php?order_id=${data.order_id}`;
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Checkout failed:', error);
+                    alert('Checkout failed. Please try again.');
                 });
-            });
-
-            // Function to increase quantity
-            plusButtons.forEach(button => {
-                button.addEventListener("click", () => {
-                    const quantityInput = button.previousElementSibling; // The input is previous to the plus button
-                    let currentValue = parseInt(quantityInput.value);
-
-                    quantityInput.value = currentValue + 1;
-                });
-            });
         });
     </script>
-
-
-
 
 </body>
 

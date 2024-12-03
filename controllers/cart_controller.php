@@ -1,29 +1,18 @@
 <?php
-include_once '../classes/cart_class.php';
+include_once(realpath('../classes/cart_class.php')); // Correct the path to your Cart class file
 
-$cart = new Cart();
+$cart = new Cart(); // Instantiate the Cart object globally
 
 // Add Product to Cart Controller
-function addProductToCartController($customer_id, $product_id)
+function addProductToCartController($customer_id, $product_id, $quantity = 1)
 {
     global $cart;
-
-    // Check if the customer ID and product ID are valid
-    if ($customer_id && $product_id) {
-        // Call the model's addToCart method to add the product to the cart
-        return $cart->addToCart($customer_id, $product_id);
-    }
-
-    // Return false if there is any issue
-    return false;
+    return $cart->addToCart($customer_id, $product_id, $quantity);
 }
 
-// Get Cart Items by Customer ID Controller
 function getCartItemsByCustomerController($customer_id)
 {
     global $cart;
-
-    // Fetch the cart items using the model
     return $cart->getCartByCustomer($customer_id);
 }
 
@@ -32,9 +21,16 @@ function removeProductFromCartController($customer_id, $product_id)
 {
     global $cart;
 
-    // Call the model to remove the product from the cart
-    return $cart->removeFromCart($customer_id, $product_id);
+    // Remove the product from the cart and update the stock
+    $result = $cart->removeFromCart($customer_id, $product_id);
+
+    if (!$result) {
+        error_log("Failed to remove product from cart and/or update stock for product_id = $product_id");
+    }
+
+    return $result;
 }
+
 
 // Update the quantity of a product in the cart
 function updateProductQuantityInCartController($customer_id, $product_id, $quantity)
@@ -74,3 +70,22 @@ function clearCartController($customer_id)
     return $cart->clearCart($customer_id);
 }
 
+function getCartItemByCustomerAndProductController($customer_id, $product_id)
+{
+    global $cart;
+    return $cart->getCartItemByCustomerAndProduct($customer_id, $product_id);
+}
+
+// Get all items in the cart for a specific customer
+function getCartItemsByCustomerId($customerId)
+{
+    global $cart;
+    return $cart->getCartItemsByCustomerId($customerId);  // Return an array of cart items for the given customer ID
+}
+
+// Get the latest unpaid order for a customer
+function getLatestUnpaidOrderController($customerId)
+{
+    global $order;
+    return $order->getLatestUnpaidOrder($customerId);  // Returns the latest unpaid order for a specific customer
+}

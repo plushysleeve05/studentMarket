@@ -1,53 +1,60 @@
 <?php
 // Include the Order class
-include_once '../classes/order_class.php';
+include_once realpath('../classes/order_class.php');
 
-// Instantiate the Order class
 $order = new Order();
 
-// Add a new order (Create)
-function addOrderController()
+function markOrderAsPaidController($orderId)
 {
     global $order;
-    if (isset($_POST['customer_id']) && isset($_POST['invoice_no']) && isset($_POST['order_date']) && isset($_POST['status'])) {
-        $customerId = $_POST['customer_id'];
-        $invoiceNo = $_POST['invoice_no'];
-        $orderDate = $_POST['order_date'];
-        $status = $_POST['status'];
-
-        if ($orderId = $order->createOrder($customerId, $invoiceNo, $orderDate, $status)) {
-            header("Location: ../view/view_orders.php?order_id=$orderId");
-        } else {
-            header("Location: ../view/view_orders.php?error=Failed to add order");
-        }
-    }
+    return $order->markOrderAsPaid($orderId);
 }
 
-// Delete an order (Delete)
-function deleteOrderController()
+function addOrderController($customerId, $invoiceNo, $orderDate, $status)
 {
     global $order;
-    if (isset($_POST['order_id'])) {
-        $orderId = $_POST['order_id'];
-        if ($order->deleteOrder($orderId)) {
-            header("Location: ../view/view_orders.php");
-        } else {
-            header("Location: ../view/view_orders.php?error=Failed to delete order");
-        }
-    }
+    return $order->createOrder($customerId, $invoiceNo, $orderDate, $status);
 }
 
-// View all orders (Read)
+function deleteOrderController($orderId)
+{
+    global $order;
+    return $order->deleteOrder($orderId);
+}
+
 function viewOrdersController()
 {
     global $order;
-    return $order->getOrders();  // Returns an array of all orders
+    return $order->getOrders();
 }
 
-// View order details by order ID (Read specific order details)
 function viewOrderDetailsController($orderId)
 {
     global $order;
-    return $order->getOrderDetails($orderId);  // Returns an array of order items for a specific order
+    return $order->getOrderDetails($orderId);
 }
-?>
+
+function viewLatestOrderForCustomerController($customerId)
+{
+    global $order;
+    return $order->getLatestOrderForCustomer($customerId);
+}
+
+function savePaymentController($amount, $customerId, $orderId, $currency, $paymentDate)
+{
+    global $order;
+    return $order->savePayment($amount, $customerId, $orderId, $currency, $paymentDate);
+}
+
+function getLatestUnpaidOrderController($customerId)
+{
+    global $order;
+    return $order->getLatestUnpaidOrder($customerId);
+}
+
+// View orders for a specific customer (Read)
+function viewOrdersByCustomerController($customerId)
+{
+    global $order;
+    return $order->getOrdersByCustomerId($customerId);  // Returns an array of all orders for a specific customer
+}

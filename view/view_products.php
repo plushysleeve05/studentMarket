@@ -1,6 +1,6 @@
 <?php
 session_start(); // Start session to check login status
-include '../view/cart_drawer.html';
+include '../view/cart_drawer.php';
 include_once '../controllers/product_controller.php';
 include_once '../controllers/categories_controller.php'; // Include categories controller to fetch categories
 
@@ -19,12 +19,6 @@ $categories = getAllCategoriesController();
 
 // Fetch all products from the database
 $products = getAllProductsController();
-
-// // Debugging: Print categories and products
-// echo "<pre>";
-// print_r($categories); // This will print all category fields to check if they are retrieved correctly
-// print_r($products); // This will print all product fields to check if they are retrieved correctly
-// echo "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +42,7 @@ $products = getAllProductsController();
                     <div class="left-div"></div>
                     <ul>
                         <li><a href="../index.php">Home</a></li>
-                        <li><a href="products.php">Products</a></li>
+                        <li><a href="view_products.php">Products</a></li>
                         <li><a href="about.php">About</a></li>
                         <li><a href="contact.php">Contact</a></li>
                     </ul>
@@ -82,11 +76,9 @@ $products = getAllProductsController();
             <div class="product-page-container">
                 <!-- Sidebar for filters and categories -->
                 <div class="sidebar">
-                    <!-- Categories Checklist -->
                     <h3>Categories</h3>
                     <form id="category-filter-form">
                         <?php
-                        // Loop through the categories and display them dynamically
                         if ($categories && count($categories) > 0) {
                             foreach ($categories as $category) {
                                 echo '
@@ -127,24 +119,25 @@ $products = getAllProductsController();
 
                     <div class="products-grid" id="products-grid">
                         <?php
-                        // Display products dynamically
                         if ($products && count($products) > 0) {
                             foreach ($products as $product) {
-                                // Displaying each product card with necessary data attributes for filtering
-                                echo '<div class="product-card" data-category="' . $product['product_cat'] . '" data-price="' . $product['product_price'] . '">';
+                                echo '<div class="product-card" data-category="' . htmlspecialchars($product['product_cat']) . '" data-price="' . htmlspecialchars($product['product_price']) . '">';
                                 echo '<div class="product-card-image">';
                                 echo '<img src="' . htmlspecialchars($product['product_image']) . '" alt="' . htmlspecialchars($product['product_title']) . '">';
                                 echo '</div>';
                                 echo '<div class="product-card-content">';
                                 echo '<h3 class="product-name">' . htmlspecialchars($product['product_title']) . '</h3>';
-                                echo '<p class="product-category">' . htmlspecialchars($product['cat_name']) . '</p>'; // Display category name
-                                echo '<p class="product-price"><span class="new-price">$' . number_format($product['product_price'], 2) . '</span></p>';
+                                echo '<p class="product-category">' . htmlspecialchars($product['cat_name']) . '</p>';
+                                echo '<p class="product-price"><span class="new-price">GHS ' . number_format($product['product_price'], 2) . '</span></p>';
+
+                                // Add to Cart Button with JavaScript
                                 echo '<div class="quantity-section">';
-                                echo '<button class="quantity-button minus">-</button>';
-                                echo '<input type="number" class="quantity-input" value="1" min="1">';
-                                echo '<button class="quantity-button plus">+</button>';
+                                echo '<button type="button" class="quantity-button minus">-</button>';
+                                echo '<input type="number" class="quantity-input" value="1" min="1" data-product-id="' . htmlspecialchars($product['product_id']) . '">';
+                                echo '<button type="button" class="quantity-button plus">+</button>';
                                 echo '</div>';
-                                echo '<button class="add-to-cart-button">Add to Cart</button>';
+                                echo '<button type="button" class="add-to-cart-button" data-product-id="' . htmlspecialchars($product['product_id']) . '">Add to Cart</button>';
+
                                 echo '</div>';
                                 echo '</div>';
                             }
@@ -163,9 +156,9 @@ $products = getAllProductsController();
                     <h2>Contact Us</h2><br>
                     <p>Email: info@studentmarketplace.com <br>| Phone: +233 55 256 7973 </p>
                     <div class="social-icons">
-                        <a href="#"><img src="images/icons8-facebook.svg" alt="Facebook"></a>
-                        <a href="#"><img src="images/icons8-twitter.svg" alt="Twitter"></a>
-                        <a href="#"><img src="images/icons8-instagram.svg" alt="Instagram"></a>
+                        <a href="#"><img src="../images/icons8-facebook.svg" alt="Facebook"></a>
+                        <a href="#"><img src="../images/icons8-twitter.svg" alt="Twitter"></a>
+                        <a href="#"><img src="../images/icons8-instagram.svg" alt="Instagram"></a>
                     </div>
                 </div>
 
@@ -195,60 +188,87 @@ $products = getAllProductsController();
 
     <script src="../js/cart_drawer.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const categoryCheckboxes = document.querySelectorAll(".category-checkbox");
-            const priceMinInput = document.getElementById("price-min");
-            const priceMaxInput = document.getElementById("price-max");
-            const applyPriceFilterButton = document.getElementById("apply-price-filter");
-            const productsGrid = document.getElementById("products-grid");
-            const productHeaderTitle = document.getElementById("product-header-title");
+        document.addEventListener("DOMContentLoaded", () => {
+            const cartDrawer = document.getElementById("cart-drawer");
+            const openCartButton = document.getElementById("open-cart-button");
+            const closeCartButton = document.getElementById("close-cart-button");
+            const cartOverlay = document.getElementById("cart-overlay");
 
-            function filterProducts() {
-                const selectedCategories = Array.from(categoryCheckboxes)
-                    .filter(checkbox => checkbox.checked)
-                    .map(checkbox => checkbox.value);
-
-                const minPrice = parseFloat(priceMinInput.value) || 0;
-                const maxPrice = parseFloat(priceMaxInput.value) || Infinity;
-
-                let visibleProductCount = 0;
-
-                productsGrid.querySelectorAll(".product-card").forEach(card => {
-                    const productCategory = card.getAttribute("data-category");
-                    const productPrice = parseFloat(card.getAttribute("data-price"));
-
-                    const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(productCategory);
-                    const priceMatch = productPrice >= minPrice && productPrice <= maxPrice;
-
-                    if (categoryMatch && priceMatch) {
-                        card.style.display = "flex"; // Display matching product
-                        visibleProductCount++;
-                    } else {
-                        card.style.display = "none"; // Hide non-matching product
-                    }
-                });
-
-                // Update header based on the filters
-                if (selectedCategories.length > 0) {
-                    productHeaderTitle.textContent = selectedCategories.join(", ");
-                } else {
-                    productHeaderTitle.textContent = "All Products";
-                }
-
-                // Optionally, show a message if no products match
-                if (visibleProductCount === 0) {
-                    productsGrid.innerHTML = "<p>No products found matching your criteria.</p>";
-                }
-            }
-
-            // Event listeners for filtering
-            categoryCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener("change", filterProducts);
+            // Open the cart drawer
+            openCartButton.addEventListener("click", () => {
+                cartDrawer.style.right = "0";
+                cartOverlay.classList.add("show");
             });
 
-            applyPriceFilterButton.addEventListener("click", filterProducts);
+            // Close the cart drawer
+            closeCartButton.addEventListener("click", () => {
+                cartDrawer.style.right = "-400px";
+                cartOverlay.classList.remove("show");
+            });
+
+            // Close the cart drawer when clicking the overlay
+            cartOverlay.addEventListener("click", () => {
+                cartDrawer.style.right = "-400px";
+                cartOverlay.classList.remove("show");
+            });
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Use a parent container for event delegation
+            const productsGrid = document.getElementById('products-grid');
+
+            // // Event listener for quantity buttons
+            // productsGrid.addEventListener('click', (event) => {
+            //     if (event.target.classList.contains('quantity-button')) {
+            //         const button = event.target;
+            //         const quantityInput = button.parentElement.querySelector('.quantity-input');
+            //         let currentValue = parseInt(quantityInput.value);
+
+            //         if (button.classList.contains('plus')) {
+            //             quantityInput.value = currentValue + 1;
+            //         } else if (button.classList.contains('minus') && currentValue > parseInt(quantityInput.min)) {
+            //             quantityInput.value = currentValue - 1;
+            //         }
+            //     }
+            // });
+
+            // Event listener for add to cart buttons
+            productsGrid.addEventListener('click', (event) => {
+                if (event.target.classList.contains('add-to-cart-button')) {
+                    const button = event.target;
+                    const productId = button.getAttribute("data-product-id");
+                    const quantityInput = button.parentElement.querySelector('.quantity-input');
+                    const quantity = parseInt(quantityInput.value);
+
+                    // Fetch request to add product to cart
+                    fetch("../actions/add_to_cart_action.php", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: new URLSearchParams({
+                                product_id: productId,
+                                quantity: quantity
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert("Product added to cart successfully in GHS.");
+                            } else {
+                                alert(data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error adding to cart:", error);
+                            alert("Failed to add product to cart. Please try again later.");
+                        });
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

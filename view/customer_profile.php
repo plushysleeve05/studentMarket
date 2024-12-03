@@ -1,22 +1,26 @@
 <?php
 include_once '../classes/customer_class.php';
 include_once '../controllers/customer_controller.php';
+include_once '../controllers/order_controller.php';
 
 session_start();
 
 if (!isset($_SESSION['customer_id'])) {
-    // Redirect to login page if not authenticated
     header("Location: login.php");
     exit;
 }
 
+
 $customer = new Customer();
-$customerData = $customer->getCustomerByEmail($_SESSION['user_email']); // Fetch customer data using session email
+$customerData = $customer->getCustomerByEmail($_SESSION['user_email']);
 
 if (!$customerData) {
     echo "Error fetching customer data.";
     exit;
 }
+
+$customerId = $_SESSION['customer_id'];
+$orders = viewOrdersByCustomerController($customerId);
 ?>
 
 <!DOCTYPE html>
@@ -40,8 +44,6 @@ if (!$customerData) {
                 <ul>
                     <li><a href="../index.php">Home</a></li>
                     <li><a href="view_products.php">Products</a></li>
-                    <!-- <li><a href="about.php">About</a></li> -->
-                    <!-- <li><a href="customer_profile.php#contact-section">Contact</a></li> -->
                 </ul>
                 <div class="right-div"></div>
             </nav>
@@ -129,38 +131,29 @@ if (!$customerData) {
                             <thead>
                                 <tr>
                                     <th>Order #</th>
-                                    <th>Item</th>
                                     <th>Date</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>#1234</td>
-                                    <td>Wireless Headphones</td>
-                                    <td>2024-11-15</td>
-                                    <td>Delivered</td>
-                                    <td><a href="#" class="track-order">Track Order</a></td>
-                                </tr>
-                                <tr>
-                                    <td>#1235</td>
-                                    <td>Smart Watch</td>
-                                    <td>2024-11-18</td>
-                                    <td>In Transit</td>
-                                    <td><a href="#" class="track-order">Track Order</a></td>
-                                </tr>
-                                <tr>
-                                    <td>#1236</td>
-                                    <td>Bluetooth Speaker</td>
-                                    <td>2024-11-20</td>
-                                    <td>Cancelled</td>
-                                    <td><a href="#" class="track-order">Track Order</a></td>
-                                </tr>
+                                <?php if (count($orders) > 0): ?>
+                                    <?php foreach ($orders as $order): ?>
+                                        <tr>
+                                            <td>#<?php echo htmlspecialchars($order['order_id']); ?></td>
+                                            <td><?php echo htmlspecialchars($order['order_date']); ?></td>
+                                            <td><?php echo htmlspecialchars($order['order_status']); ?></td>
+                                            <td><a href="order_confirmation.php?order_id=<?php echo htmlspecialchars($order['order_id']); ?>" class="track-order">View Order</a></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="4">You have no previous orders.</td>
+                                    </tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
-
 
                     <!-- Gift Cards Section -->
                     <div id="gift_cards-section" style="display: none;">

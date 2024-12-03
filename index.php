@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start the session
 
-include 'view/cart_drawer.html';
+include 'view/cart_drawer.php';
 include 'controllers/categories_controller.php';
 include_once 'controllers/product_controller.php';
 
@@ -27,8 +27,8 @@ $categories = getAllCategoriesController();
 <body>
 	<!-- HTML for Preloader -->
 	<!-- <div id="preloader" style="display: flex; align-items: center; justify-content: center; height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; background-color: #ffffff; z-index: 3000;">
-		<img src="images/mainbg.svg" alt="">
-	</div> -->
+        <img src="images/mainbg.svg" alt="">
+    </div> -->
 
 	<div class="main-container">
 		<!-- main page below -->
@@ -45,6 +45,7 @@ $categories = getAllCategoriesController();
 						<li><a href="view/view_products.php">Products</a></li>
 						<li><a href="about.php">About</a></li>
 						<li><a href="contact.php">Contact</a></li>
+						<li><a href="view/vendor_signup.php">Add Your Business</a></li>
 					</ul>
 					<div class="right-div"></div>
 				</nav>
@@ -72,7 +73,6 @@ $categories = getAllCategoriesController();
 				</div>
 				<div class="right-div"></div>
 			</nav>
-
 
 			<!-- hero section -->
 			<div class="hero-sec-container">
@@ -138,9 +138,6 @@ $categories = getAllCategoriesController();
 				</div>
 			</div>
 
-
-
-
 			<!-- Benefits Section -->
 			<section class="benefits-section">
 				<!-- <h2 class="ft-text">Why Choose ST-Marketplace?</h2><br><br> -->
@@ -163,7 +160,6 @@ $categories = getAllCategoriesController();
 				<h2 class="ft-text">Latest Listings</h2><br>
 				<div class="products-grid">
 					<?php
-					// include_once(dirname(__DIR__). '/controllers/product_controller.php');
 					$products = getAllProductsController();
 
 					// Check if there are products available
@@ -184,7 +180,13 @@ $categories = getAllCategoriesController();
 									<p class="product-price">
 										<span class="new-price">$<?php echo number_format($product['product_price'], 2); ?></span>
 									</p>
-									<button class="add-to-cart-button">Add to Cart</button>
+									<!-- Add to Cart Button -->
+									<div class="quantity-section">
+										<button type="button" class="quantity-button minus">-</button>
+										<input type="number" name="quantity" class="quantity-input" value="1" min="1">
+										<button type="button" class="quantity-button plus">+</button>
+									</div>
+									<button class="add-to-cart-button" data-product-id="<?php echo htmlspecialchars($product['product_id']); ?>">Add to Cart</button>
 								</div>
 							</div>
 					<?php
@@ -196,9 +198,6 @@ $categories = getAllCategoriesController();
 					?>
 				</div>
 			</section>
-
-
-
 			<!-- Call to Action Banner Section -->
 			<section class="cta-banner">
 				<div class="cta-content">
@@ -267,16 +266,73 @@ $categories = getAllCategoriesController();
 		</div>
 	</div>
 
+	<!-- JavaScript for adding to cart using AJAX -->
 	<script>
-		// JavaScript to Remove Preloader After Page Load
-		window.addEventListener('load', function() {
-			const preloader = document.getElementById('preloader');
-			preloader.style.opacity = '0';
-			setTimeout(() => {
-				preloader.style.display = 'none';
-			}, 1000);
+		document.addEventListener("DOMContentLoaded", () => {
+			// Add to Cart Button Functionality
+			document.querySelectorAll(".add-to-cart-button").forEach(button => {
+				button.addEventListener("click", function() {
+					const productId = button.getAttribute("data-product-id");
+					const quantityInput = button.closest(".product-card-content").querySelector(".quantity-input");
+					const quantity = parseInt(quantityInput.value);
+
+					fetch("actions/add_to_cart_action.php", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/x-www-form-urlencoded"
+							},
+							body: new URLSearchParams({
+								product_id: productId,
+								quantity: quantity
+							})
+						})
+						.then(response => response.json())
+						.then(data => {
+							if (data.success) {
+								alert("Product added to cart successfully.");
+								// Optionally update the cart UI to show the new items count.
+							} else {
+								alert(data.message);
+							}
+						})
+						.catch(error => {
+							console.error("Error adding product to cart:", error);
+							alert("Failed to add product to cart. Please try again later.");
+						});
+				});
+			});
+
+			// Select all quantity buttons
+			const minusButtons = document.querySelectorAll(".quantity-button.minus");
+			const plusButtons = document.querySelectorAll(".quantity-button.plus");
+
+			// Function to decrease quantity
+			minusButtons.forEach(button => {
+				button.addEventListener("click", () => {
+					const quantityInput = button.nextElementSibling;
+					let currentValue = parseInt(quantityInput.value);
+
+					if (currentValue > parseInt(quantityInput.min)) {
+						quantityInput.value = currentValue - 1;
+					}
+				});
+			});
+
+			// Function to increase quantity
+			plusButtons.forEach(button => {
+				button.addEventListener("click", () => {
+					const quantityInput = button.previousElementSibling;
+					let currentValue = parseInt(quantityInput.value);
+
+					quantityInput.value = currentValue + 1;
+				});
+			});
 		});
 	</script>
+
+	</div>
+	</div>
+
 	<script src="js/cart_drawer.js"></script>
 </body>
 
